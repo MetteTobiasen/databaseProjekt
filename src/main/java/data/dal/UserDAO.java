@@ -23,7 +23,7 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
 
             pStmt.setInt(1, user.getUserId());
             pStmt.setString(2 ,user.getUserName());
-            pStmt.setString(3, user.getIni());
+            //pStmt.setString(3, user.getIni());
             //skal slettes
             //pStmt.setString(4, user.getCpr());
             //pStmt.setString(5, user.getPassword());
@@ -61,7 +61,7 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
             user = new UserDTO();
             user.setUserId(userId);
             user.setUserName(resultSet.getString(2));
-            user.setIni(resultSet.getString(3));
+            //user.setIni(resultSet.getString(3));
             //user.setCpr(resultSet.getString(4));
             //user.setPassword(resultSet.getString(5));
 
@@ -92,7 +92,7 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
                 user = new UserDTO();
                 user.setUserId(resultSet.getInt(1));
                 user.setUserName(resultSet.getString(2));
-                user.setIni(resultSet.getString(3));
+                //user.setIni(resultSet.getString(3));
                 //user.setCpr(resultSet.getString(4));
                 //user.setPassword(resultSet.getString(5));
 
@@ -113,7 +113,7 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
             PreparedStatement pStmt = connection.prepareStatement(sqlStatement);
 
             pStmt.setString(1, user.getUserName());
-            pStmt.setString(2, user.getIni());
+            //pStmt.setString(2, user.getIni());
             //pStmt.setString(3, user.getCpr());
             //pStmt.setString(4, user.getPassword());
 
