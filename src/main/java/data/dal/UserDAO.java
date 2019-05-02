@@ -19,7 +19,7 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
     public void createUser(IUserDTO user) throws DALException {
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){   // med det syntax behøver man ikke lave final og connection.close()
             // try with resources
-            PreparedStatement pStmt = connection.prepareStatement("INSERT INTO users_cdio VALUES(?,?,?,?,?,?)");
+            PreparedStatement pStmt = connection.prepareStatement("INSERT INTO users_db VALUES(?,?)");
 
             pStmt.setInt(1, user.getUserId());
             pStmt.setString(2 ,user.getUserName());
@@ -28,21 +28,22 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
             //pStmt.setString(4, user.getCpr());
             //pStmt.setString(5, user.getPassword());
 
-            String roles = "";
-            for (String s : user.getRoles()){
-                if (s.length() == 1)
-                    roles = s;
-                else
-                    roles += s + ", ";
-            }
-
-            pStmt.setString(6, roles);
+//            String roles = "";
+//            for (String s : user.getRoles()){
+//                if (s.length() == 1)
+//                    roles = s;
+//                else
+//                    roles += s + ", ";
+//            }
+//
+//            pStmt.setString(6, roles);
             pStmt.executeUpdate();
 
         } catch (SQLException e){
             e.printStackTrace();
         }
     }
+
 
     @Override
     public UserDTO getUser(int userId) throws IUserDAO.DALException {
@@ -52,13 +53,13 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
         try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
 
             PreparedStatement pStmt = connection.prepareStatement(
-                    "SELECT * FROM users_cdio WHERE user_id = ?");
+                    "SELECT * FROM users_db WHERE user_id = ?");
 
             pStmt.setInt(1, userId);
             ResultSet resultSet = pStmt.executeQuery();
             resultSet.next();
 
-            user = new UserDTO();
+//            user = new UserDTO();
             user.setUserId(userId);
             user.setUserName(resultSet.getString(2));
             //user.setIni(resultSet.getString(3));
@@ -66,9 +67,9 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
             //user.setPassword(resultSet.getString(5));
 
             // get roles
-            String str = resultSet.getString(6);
-            List<String> roles = new ArrayList<String>(Arrays.asList(str.split(", ")));
-            user.setRoles(roles);
+//            String str = resultSet.getString(6);
+//            List<String> roles = new ArrayList<String>(Arrays.asList(str.split(", ")));
+//            user.setRoles(roles);
 
         } catch (SQLException e){
             e.printStackTrace();
@@ -108,29 +109,29 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
 
     @Override
     public void updateUser(IUserDTO user) throws DALException {
-        try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){   // med det syntax behøver man ikke lave final og connection.close()
-            String sqlStatement = "UPDATE users_cdio SET userName = ?, ini = ?, cpr = ?, password = ?, roles = ? WHERE user_id = " + user.getUserId();
-            PreparedStatement pStmt = connection.prepareStatement(sqlStatement);
-
-            pStmt.setString(1, user.getUserName());
-            //pStmt.setString(2, user.getIni());
-            //pStmt.setString(3, user.getCpr());
-            //pStmt.setString(4, user.getPassword());
-
-            String roles = "";
-            for (String s : user.getRoles()){
-                if (s.length() == 1)
-                    roles = s;
-                else
-                    roles += s + ", ";
-            }
-
-            pStmt.setString(5, roles);
-            pStmt.executeUpdate();
-
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
+//        try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){   // med det syntax behøver man ikke lave final og connection.close()
+//            String sqlStatement = "UPDATE users_cdio SET userName = ?, ini = ?, cpr = ?, password = ?, roles = ? WHERE user_id = " + user.getUserId();
+//            PreparedStatement pStmt = connection.prepareStatement(sqlStatement);
+//
+//            pStmt.setString(1, user.getUserName());
+//            //pStmt.setString(2, user.getIni());
+//            //pStmt.setString(3, user.getCpr());
+//            //pStmt.setString(4, user.getPassword());
+//
+//            String roles = "";
+//            for (String s : user.getRoles()){
+//                if (s.length() == 1)
+//                    roles = s;
+//                else
+//                    roles += s + ", ";
+//            }
+//
+//            pStmt.setString(5, roles);
+//            pStmt.executeUpdate();
+//
+//        } catch (SQLException e){
+//            e.printStackTrace();
+//        }
     }
 
     @Override

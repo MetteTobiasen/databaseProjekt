@@ -12,6 +12,7 @@ public interface IUserDTO {
 
     void setUserName(String userName);
 
+    String toString();
 
     // skal fjernes da det ikke bliver brugt i databasen
     //String getIni();
