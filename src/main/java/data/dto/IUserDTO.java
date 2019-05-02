@@ -12,9 +12,12 @@ public interface IUserDTO {
 
     void setUserName(String userName);
 
-    String getIni();
 
-    void setIni(String ini);
+    // skal fjernes da det ikke bliver brugt i databasen
+    //String getIni();
+
+    // skal fjernes da det ikke blier brugt i databasen
+    //void setIni(String ini);
 
     List<String> getRoles();
 
