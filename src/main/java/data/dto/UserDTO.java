@@ -26,7 +26,7 @@ public class UserDTO implements Serializable, IUserDTO {
 
     //@Override
     //public String getIni() {
-        return null;
+    //    return null;
     //}
 
     //@Override
@@ -34,23 +34,23 @@ public class UserDTO implements Serializable, IUserDTO {
 
     //}
 
-    @Override
-    public List<String> getRoles() {
-        return null;
-    }
+    //@Override
+    //public List<String> getRoles() {
+    //    return null;
+    //}
 
-    @Override
-    public void setRoles(List<String> roles) {
+    //@Override
+    //public void setRoles(List<String> roles) {
 
-    }
+    //}
 
-    @Override
-    public void addRole(String role) {
+    //@Override
+    //public void addRole(String role) {
 
-    }
+    //}
 
-    @Override
-    public boolean removeRole(String role) {
-        return false;
-    } //TODO fix
+    //@Override
+    //public boolean removeRole(String role) {
+    //    return false;
+    //} //TODO fix
 }
