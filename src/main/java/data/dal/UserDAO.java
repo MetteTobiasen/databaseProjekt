@@ -3,6 +3,7 @@ package data.dal;
 import java.util.List;
 
 public class UserDAO implements data.dal.IUserDAO{
+
     @Override
     public void createUser(IUserDTO user) throws DALException {
 
