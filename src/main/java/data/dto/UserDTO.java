@@ -24,15 +24,15 @@ public class UserDTO implements Serializable, IUserDTO {
 
     }
 
-    @Override
-    public String getIni() {
+    //@Override
+    //public String getIni() {
         return null;
-    }
+    //}
 
-    @Override
-    public void setIni(String ini) {
+    //@Override
+    //public void setIni(String ini) {
 
-    }
+    //}
 
     @Override
     public List<String> getRoles() {

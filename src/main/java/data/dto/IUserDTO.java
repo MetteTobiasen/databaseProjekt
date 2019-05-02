@@ -19,12 +19,12 @@ public interface IUserDTO {
     // skal fjernes da det ikke blier brugt i databasen
     //void setIni(String ini);
 
-    List<String> getRoles();
+    //List<String> getRoles();
 
-    void setRoles(List<String> roles);
+    //void setRoles(List<String> roles);
 
-    void addRole(String role);
+    //void addRole(String role);
 
-    boolean removeRole(String role);
+    //boolean removeRole(String role);
 
 }
