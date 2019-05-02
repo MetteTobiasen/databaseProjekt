@@ -1,4 +1,4 @@
-package dal;
+package data.dal;
 
 import java.util.List;
 
