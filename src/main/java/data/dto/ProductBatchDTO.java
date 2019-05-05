@@ -11,7 +11,7 @@ public class ProductBatchDTO {
     private Date expirationDate;
     //private int recipeId;
 
-    public ProductBatchDTO(int productBatchId, int productId, String producerName, int productBatchAmount, Date expirationDate){
+    public ProductBatchDTO(){
         this.productBatchId = productBatchId;
         this.productId = productId;
         this.producerName = producerName;

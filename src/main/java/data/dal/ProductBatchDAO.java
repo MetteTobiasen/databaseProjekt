@@ -44,9 +44,31 @@ public class ProductBatchDAO {
 
 
 
-    public List<ProductBatchDAO> getProductBatchList(){
+    public List<ProductBatchDTO> getProductBatchList() throws IUserDAO.DALException {
+        List<ProductBatchDTO> productBatches = new ArrayList<>();
+        ProductBatchDTO productBatch = null;
 
-        return null;
+        try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
+
+            PreparedStatement pStmt = connection.prepareStatement("SELECT * FROM product_batches");
+
+            ResultSet resultset = pStmt.executeQuery();
+
+            while(resultset.next()){
+                productBatch = new ProductBatchDTO();
+                productBatch.setProductBatchId(resultset.getInt(1));
+                productBatch.setProductId(resultset.getInt(2));
+                productBatch.setProducerName(resultset.getString(3));
+                productBatch.setProductBatchAmount(resultset.getInt(4));
+                productBatch.setExpirationDate(resultset.getDate(5));
+
+                // adds productBatches to productBatchList
+                productBatches.add(productBatch);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productBatches;
     }
 
 }
