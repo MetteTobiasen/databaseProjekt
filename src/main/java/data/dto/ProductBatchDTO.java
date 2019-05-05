@@ -1,15 +1,20 @@
 package data.dto;
 
+import java.util.Date;
+
 public class ProductBatchDTO {
 
     private int productBatchId;
+    private int productId;
+    private String producerName;
     private int productBatchAmount;
-    private int expirationDate;
-    //private int productId;
+    private Date expirationDate;
     //private int recipeId;
 
-    public ProductBatchDTO(int productBatchId, int productBatchAmount, int expirationDate){
+    public ProductBatchDTO(int productBatchId, int productId, String producerName, int productBatchAmount, Date expirationDate){
         this.productBatchId = productBatchId;
+        this.productId = productId;
+        this.producerName = producerName;
         this.productBatchAmount = productBatchAmount;
         this.expirationDate = expirationDate;
     }
@@ -21,6 +26,21 @@ public class ProductBatchDTO {
     public void setProductBatchId(int productBatchId){
         this.productBatchId = productBatchId;
     }
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public String getProducerName(){
+        return producerName;
+    }
+
+    public void setProducerName(String producerName) {
+        this.producerName = producerName;
+    }
 
     public int getProductBatchAmount(){
         return productBatchAmount;
@@ -30,17 +50,16 @@ public class ProductBatchDTO {
         this.productBatchAmount = productBatchAmount;
     }
 
-    public int getExpirationDate(){
+    public Date getExpirationDate(){
         return expirationDate;
     }
 
-    public void setExpirationDate(int expirationDate){
+    public void setExpirationDate(Date expirationDate){
         this.expirationDate = expirationDate;
     }
 
-    @Override
     public String toString() {
-        return "ProductBatchDTO [productBatchId = " + productBatchId + ", productBatchAmount = " + productBatchAmount + " expirationDate = " + expirationDate + "]";
+        return "ProductBatchDTO [productBatchId = " + productBatchId + ", productId = " + productId + ", producerName = " + producerName + ", productBatchAmount = " + productBatchAmount + ", expirationDate = " + expirationDate + "]";
     }
 
     // manlger order status

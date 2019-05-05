@@ -39,7 +39,7 @@ public class ProductOrderDTO {
 
     @Override
     public String toString() {
-        return "ProductOrderDTO [productOrderId = " + productOrderId + ", productOrderName = " + productOrderName + " productOrderDate = " + productOrderDate + "]";
+        return "ProductOrderDTO [productOrderId = " + productOrderId + ", productOrderName = " + productOrderName + ", productOrderDate = " + productOrderDate + "]";
     }
 
     // mangler status

@@ -13,8 +13,7 @@ public class IngridientDTO {
         this.ingridientAmountInMg = ingridientAmountInMg;
     }
 
-    public int getIngridientId(){
-        return ingridientId;
+    public int getIngridientId(){ return ingridientId;
     }
 
     public void setIngridientId(int ingridientId) {
