@@ -9,11 +9,15 @@ public class ProductBatchDTO {
     private Date expirationDate;
     private int recipeId;
 
-    public ProductBatchDTO(){
+    public ProductBatchDTO(int productBatchId, int productBatchAmount, Date expirationDate, int recipeId){
         this.productBatchId = productBatchId;
         this.productBatchAmount = productBatchAmount;
         this.expirationDate = expirationDate;
         this.recipeId = recipeId;
+
+    }
+
+    public ProductBatchDTO() {
 
     }
 

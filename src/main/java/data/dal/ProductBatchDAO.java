@@ -1,15 +1,13 @@
 package data.dal;
 
 import data.dto.ProductBatchDTO;
-import data.dto.ProductDTO;
 
 import java.io.Serializable;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class ProductBatchDAO {
+public class ProductBatchDAO implements Serializable{
 
     private final String url = "jdbc:mysql://ec2-52-30-211-3.eu-west-1.compute.amazonaws.com/s185131?";
     private final String userName= "user=s185131";
@@ -40,8 +38,6 @@ public class ProductBatchDAO {
         }
         return productBatch;
     }
-
-    // Lav en metode som henter productBatches ud fra productId
 
 
     public List<ProductBatchDTO> getProductBatchList() throws IUserDAO.DALException {
