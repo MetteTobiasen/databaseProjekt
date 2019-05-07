@@ -16,7 +16,7 @@ public class ProductDAO implements Serializable {
     public void createProduct(ProductDTO product) throws IUserDAO.DALException {
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
 
-            PreparedStatement pStmt = connection.prepareStatement("INSERT INTO products VALUES(?,?,?");
+            PreparedStatement pStmt = connection.prepareStatement("INSERT INTO products VALUES(?,?,?)");
 
             pStmt.setInt(1, product.getProductId());
             pStmt.setString(2 , product.getProductName());

@@ -42,6 +42,7 @@ public class ProductBatchDAO {
         return productBatch;
     }
 
+    // Lav en metode som henter productBatches ud fra productId
 
 
     public List<ProductBatchDTO> getProductBatchList() throws IUserDAO.DALException {
