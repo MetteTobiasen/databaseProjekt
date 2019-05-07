@@ -5,18 +5,16 @@ import java.util.Date;
 public class ProductBatchDTO {
 
     private int productBatchId;
-    private int productId;
-    private String producerName;
     private int productBatchAmount;
     private Date expirationDate;
-    //private int recipeId;
+    private int recipeId;
 
     public ProductBatchDTO(){
         this.productBatchId = productBatchId;
-        this.productId = productId;
-        this.producerName = producerName;
         this.productBatchAmount = productBatchAmount;
         this.expirationDate = expirationDate;
+        this.recipeId = recipeId;
+
     }
 
     public int getProductBatchId(){
@@ -25,21 +23,6 @@ public class ProductBatchDTO {
 
     public void setProductBatchId(int productBatchId){
         this.productBatchId = productBatchId;
-    }
-    public int getProductId() {
-        return productId;
-    }
-
-    public void setProductId(int productId) {
-        this.productId = productId;
-    }
-
-    public String getProducerName(){
-        return producerName;
-    }
-
-    public void setProducerName(String producerName) {
-        this.producerName = producerName;
     }
 
     public int getProductBatchAmount(){
@@ -50,6 +33,7 @@ public class ProductBatchDTO {
         this.productBatchAmount = productBatchAmount;
     }
 
+
     public Date getExpirationDate(){
         return expirationDate;
     }
@@ -58,8 +42,16 @@ public class ProductBatchDTO {
         this.expirationDate = expirationDate;
     }
 
+    public int getRecipeId() {
+        return recipeId;
+    }
+
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
+    }
+
     public String toString() {
-        return "ProductBatchDTO [productBatchId = " + productBatchId + ", productId = " + productId + ", producerName = " + producerName + ", productBatchAmount = " + productBatchAmount + ", expirationDate = " + expirationDate + "]";
+        return "ProductBatchDTO [productBatchId = " + productBatchId + ", productBatchAmount = " + productBatchAmount + ", expirationDate = " + expirationDate + "]";
     }
 
     // manlger order status

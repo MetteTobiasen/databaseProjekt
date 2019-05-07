@@ -31,10 +31,9 @@ public class ProductBatchDAO {
             resultset.next();
 
             productBatch.setProductBatchId(productBatchId);
-            productBatch.setProductId(resultset.getInt(2));
-            productBatch.setProducerName(resultset.getString(3));
-            productBatch.setProductBatchAmount(resultset.getInt(4));
-            productBatch.setExpirationDate(resultset.getDate(5));
+            productBatch.setProductBatchAmount(resultset.getInt(2));
+            productBatch.setExpirationDate(resultset.getDate(3));
+            productBatch.setRecipeId(resultset.getInt(4));
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,10 +57,9 @@ public class ProductBatchDAO {
             while(resultset.next()){
                 productBatch = new ProductBatchDTO();
                 productBatch.setProductBatchId(resultset.getInt(1));
-                productBatch.setProductId(resultset.getInt(2));
-                productBatch.setProducerName(resultset.getString(3));
-                productBatch.setProductBatchAmount(resultset.getInt(4));
-                productBatch.setExpirationDate(resultset.getDate(5));
+                productBatch.setProductBatchAmount(resultset.getInt(2));
+                productBatch.setExpirationDate(resultset.getDate(3));
+                productBatch.setRecipeId(resultset.getInt(4));
 
                 // adds productBatches to productBatchList
                 productBatches.add(productBatch);
@@ -70,6 +68,53 @@ public class ProductBatchDAO {
             e.printStackTrace();
         }
         return productBatches;
+    }
+
+    public void createProductBatch(ProductBatchDTO productBatch) throws IUserDAO.DALException {
+        try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
+
+            PreparedStatement pStmt = connection.prepareStatement("INSERT INTO product_batches VALUES(?,?,?,?)");
+
+            pStmt.setInt(1, productBatch.getProductBatchId());
+            pStmt.setInt(2 , productBatch.getProductBatchAmount());
+            pStmt.setDate(3, (Date) productBatch.getExpirationDate());
+            pStmt.setInt(4, productBatch.getRecipeId());
+
+            pStmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateProductBatchAmount(ProductBatchDTO productBatch) throws IUserDAO.DALException {
+
+        try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
+
+            PreparedStatement pStmt = connection.prepareStatement("UPDATE product_batches SET product_batch_amount = ?, expiration_date = ?, recipe_id = ? WHERE product_batch_id = " + productBatch.getProductBatchId());
+
+            pStmt.setInt(1, productBatch.getProductBatchAmount());
+            pStmt.setDate(2, (Date) productBatch.getExpirationDate());
+            pStmt.setInt(3, productBatch.getRecipeId());
+
+            pStmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteProductBatch(int productBatchId) throws IUserDAO.DALException {
+
+        try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
+
+            PreparedStatement pStmt = connection.prepareStatement("DELETE product_batches WHERE product_batch_id = " + productBatchId);
+
+            pStmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }
