@@ -1,21 +1,22 @@
 package data.dal;
 
 import data.dto.IUserDTO;
+import data.dto.UserDTO;
 
 import java.util.List;
 
 public interface IUserDAO {
 
     //Create
-    void createUser(IUserDTO user) throws DALException;
+    void createUser(UserDTO user) throws DALException;
 
     //Read
-    IUserDTO getUser(int userId) throws DALException;
+    UserDTO getUser(int userId) throws DALException;
 
-    List<IUserDTO> getUserList() throws DALException;
+    List<UserDTO> getUserList() throws DALException;
 
     //Update
-    void updateUser(IUserDTO user) throws DALException;
+    void updateUser(UserDTO user) throws DALException;
 
     //Delete
     void deleteUser(int userId) throws DALException;
