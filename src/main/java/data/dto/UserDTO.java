@@ -22,7 +22,6 @@ public class UserDTO implements Serializable, IUserDTO {
 
     }
 
-
     @Override
     public int getUserId() {
         return userId;
@@ -48,33 +47,4 @@ public class UserDTO implements Serializable, IUserDTO {
         return "UserDTO [userId=" + userId + ", userName=" + userName + "]";
     }
 
-    //@Override
-    //public String getIni() {
-    //    return null;
-    //}
-
-    //@Override
-    //public void setIni(String ini) {
-
-    //}
-
-    //@Override
-    //public List<String> getRoles() {
-    //    return null;
-    //}
-
-    //@Override
-    //public void setRoles(List<String> roles) {
-
-    //}
-
-    //@Override
-    //public void addRole(String role) {
-
-    //}
-
-    //@Override
-    //public boolean removeRole(String role) {
-    //    return false;
-    //} //TODO fix
 }
