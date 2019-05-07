@@ -32,7 +32,7 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
 
 
     @Override
-    public UserDTO getUser(int userId) throws IUserDAO.DALException {
+    public UserDTO getUser(int userId) throws DALException {
         UserDTO user = null;
 
         // closes itself if something fails
@@ -101,9 +101,8 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
     @Override
     public void deleteUser(int userId) throws DALException {
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
-            //Sletter user_id fra databasen
-            String sqlStatement = "DELETE FROM users_db WHERE user_id = " + userId;
-            PreparedStatement pStmt = connection.prepareStatement(sqlStatement);
+
+            PreparedStatement pStmt = connection.prepareStatement("DELETE FROM users_db WHERE user_id = " + userId);
             pStmt.executeUpdate();
 
         }catch (SQLException e){
