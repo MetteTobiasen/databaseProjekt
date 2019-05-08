@@ -39,7 +39,7 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
         try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
 
             PreparedStatement pStmt = connection.prepareStatement(
-                    "SELECT * FROM users_db WHERE user_id = ?" + userId);
+                    "SELECT * FROM users_db WHERE user_id = ?");
 
             pStmt.setInt(1, userId);
             ResultSet resultSet = pStmt.executeQuery();
