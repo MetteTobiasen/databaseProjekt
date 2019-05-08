@@ -78,8 +78,7 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
             e.printStackTrace();
         } return users;
 
-
-            }
+    }
 
     @Override
     public void updateUser(UserDTO user) throws DALException {
@@ -87,7 +86,6 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
         try (Connection connection = DriverManager.getConnection(url + userName + "&" + pass)) {
 
             PreparedStatement pStmt = connection.prepareStatement("UPDATE users_db SET userName = ? WHERE user_id = ?");
-
 
             pStmt.setString(1, user.getUserName());
             pStmt.setInt(2, user.getUserId());
@@ -103,7 +101,9 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
     public void deleteUser(int userId) throws DALException {
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
 
-            PreparedStatement pStmt = connection.prepareStatement("DELETE FROM users_db WHERE user_id = " + userId);
+            PreparedStatement pStmt = connection.prepareStatement("DELETE FROM users_db WHERE user_id = ?");
+
+            pStmt.setInt(1, userId);
             pStmt.executeUpdate();
 
         }catch (SQLException e){
