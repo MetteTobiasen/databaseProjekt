@@ -18,10 +18,10 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
     public void createUser(UserDTO user) throws DALException {
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){   // med det syntax behøver man ikke lave final og connection.close()
             // try with resources
-            PreparedStatement pStmt = connection.prepareStatement("INSERT INTO users_db VALUES(?,?)");
+            PreparedStatement pStmt = connection.prepareStatement("INSERT INTO users_db (username) VALUES(?)");
 
-            pStmt.setInt(1, user.getUserId());
-            pStmt.setString(2 ,user.getUserName());
+            //pStmt.setInt(1, user.getUserId());
+            pStmt.setString(1 ,user.getUserName());
 
             pStmt.executeUpdate();
 
@@ -46,8 +46,12 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
             resultSet.next();
 
 //            user = new UserDTO();
-            user.setUserId(userId);
-            user.setUserName(resultSet.getString(2));
+            if (user != null) {
+                user.setUserId(userId);
+            }
+            if (user != null) {
+                user.setUserName(resultSet.getString(2));
+            }
 
         } catch (SQLException e){
             e.printStackTrace();

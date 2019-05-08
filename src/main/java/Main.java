@@ -6,10 +6,15 @@ public class Main {
 
     public static void main(String[] args) throws IUserDAO.DALException {
         UserDAO userDAO = new UserDAO();
-        UserDTO user = new UserDTO(23,"Hejsa");
+        //UserDTO user = new UserDTO(23,"Hejsa");
 
-        userDAO.createUser(user);
+        //userDAO.createUser(user);
 
-//        System.out.println(user.toString());
+        userDAO.getUser(23);
+
+
+       //System.out.println(user.toString());
     }
+
+
 }
