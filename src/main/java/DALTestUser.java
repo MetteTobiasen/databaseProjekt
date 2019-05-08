@@ -16,16 +16,22 @@ public class DALTestUser {
 
     IUserDAO userDAO = new UserDAO();
 
-
-    public void test() throws IUserDAO.DALException {
+    @Test
+    public void testCreateUser() throws IUserDAO.DALException {
 
         UserDTO testUser = new UserDTO();
-        testUser.setUserId(12);
         testUser.setUserName("LabKing");
 
         userDAO.createUser(testUser);
-        IUserDTO receivedUser = userDAO.getUser(12);
-        assertEquals(testUser.getUserName(), receivedUser.getUserName());
+        UserDTO receivedUser = userDAO.getUser(30);
+        String actual = receivedUser.getUserName();
+        String expected = testUser.getUserName();
+        assertEquals(expected, actual);
+
+    }
+
+    @Test
+    public void testGetUser() throws IUserDAO.DALException {
 
     }
 

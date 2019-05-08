@@ -10,7 +10,13 @@ public class Main {
 
         //userDAO.createUser(user);
 
-        userDAO.getUser(23);
+        userDAO.getUser(30);
+
+
+
+
+
+
 
 
        //System.out.println(user.toString());
