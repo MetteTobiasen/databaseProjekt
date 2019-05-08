@@ -86,10 +86,11 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
 
         try (Connection connection = DriverManager.getConnection(url + userName + "&" + pass)) {
 
-            PreparedStatement pStmt = connection.prepareStatement("UPDATE users_db SET userName = ? WHERE user_id = " + user.getUserId());
+            PreparedStatement pStmt = connection.prepareStatement("UPDATE users_db SET userName = ? WHERE user_id = ?");
+
 
             pStmt.setString(1, user.getUserName());
-
+            pStmt.setInt(2, user.getUserId());
             pStmt.executeUpdate();
 
         } catch (SQLException e) {
