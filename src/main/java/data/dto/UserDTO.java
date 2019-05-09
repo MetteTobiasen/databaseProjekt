@@ -18,6 +18,14 @@ public class UserDTO implements Serializable, IUserDTO {
         this.userName = userName;
     }
 
+    public UserDTO(int userId){
+        this.userId = userId;
+    }
+
+    public UserDTO() {
+
+    }
+
 
     @Override
     public int getUserId() {

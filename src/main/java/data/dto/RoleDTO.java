@@ -10,6 +10,10 @@ public class RoleDTO {
         this.roleName = roleName;
     }
 
+    public RoleDTO(int roleId){
+        this.roleId = roleId;
+    }
+
     public RoleDTO() {
 
     }

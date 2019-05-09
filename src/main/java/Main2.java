@@ -21,19 +21,19 @@ public class Main2 {
 //        userDAO.updateUser(user);
 //System.out.println(user.toString());
 
-        RecipeDAO recipeDAO = new RecipeDAO();
-        RecipeDTO recipe = new RecipeDTO();
-        recipe.setRecipeName("Rabbit stew");
+        //RecipeDAO recipeDAO = new RecipeDAO();
+        //RecipeDTO recipe = new RecipeDTO();
+        //recipe.setRecipeName("Rabbit stew");
 
-        String dateS = "2019-05-08";
-        Date date = Date.valueOf(dateS);
+        //String dateS = "2019-05-08";
+        //Date date = Date.valueOf(dateS);
 
-        recipe.setEndDate(date);
+        //recipe.setEndDate(date);
 
 
 //        recipeDAO.createRecipe(recipe);
-        List<RecipeDTO> recipes = recipeDAO.getRecipeList();
-        System.out.println(recipes.toString());                     //TODO toString skal overskrives til at skrifte linje
+        //((List<RecipeDTO> recipes = recipeDAO.getRecipeList();
+        //System.out.println(recipes.toString());                     //TODO toString skal overskrives til at skrifte linje
 
 //        recipeDAO.updateRecipe(recipe);
 //

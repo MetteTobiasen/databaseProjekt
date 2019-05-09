@@ -16,7 +16,7 @@ public class RoleDAO implements Serializable{
 
 public void createRole(RoleDTO role)throws DALException {
     try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
-        PreparedStatement pStmt = connection.prepareStatement("INSERT INTO roles_db (role_name) VALUES(?)");
+        PreparedStatement pStmt = connection.prepareStatement("INSERT INTO roles_db (rolename) VALUES(?)");
 
         pStmt.setString(1, role.getRoleName());
 

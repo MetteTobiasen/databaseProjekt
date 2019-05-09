@@ -5,7 +5,8 @@ public class UserRoleDTO {
     private int userId;
     private int roleId;
 
-    public UserRoleDTO(){
+    public UserRoleDTO(int roleId){
+        this.roleId = roleId;
     }
 
     public UserRoleDTO(int userId, int roleId){
@@ -30,6 +31,7 @@ public class UserRoleDTO {
     }
 
     public String toString(){
-        return "UserRoleDTO [ userId = " + userId + "roleId = " + roleId + "]";
+        return " roleId = " + roleId;
     }
+
 }
