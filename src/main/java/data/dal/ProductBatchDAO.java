@@ -1,5 +1,6 @@
 package data.dal;
 
+import data.dto.DALException;
 import data.dto.ProductBatchDTO;
 
 import java.io.Serializable;
@@ -14,7 +15,7 @@ public class ProductBatchDAO implements Serializable{
     private final String pass = "password=f641omiIhm3Ly1oQR5khj";
 
 
-    public ProductBatchDTO getProductBatch(int productBatchId) throws IUserDAO.DALException {
+    public ProductBatchDTO getProductBatch(int productBatchId) throws DALException {
 
         ProductBatchDTO productBatch = null;
 
@@ -41,7 +42,7 @@ public class ProductBatchDAO implements Serializable{
     }
 
 
-    public List<ProductBatchDTO> getProductBatchList() throws IUserDAO.DALException {
+    public List<ProductBatchDTO> getProductBatchList() throws DALException {
         List<ProductBatchDTO> productBatches = new ArrayList<>();
         ProductBatchDTO productBatch = null;
 
@@ -67,7 +68,7 @@ public class ProductBatchDAO implements Serializable{
         return productBatches;
     }
 
-    public void createProductBatch(ProductBatchDTO productBatch) throws IUserDAO.DALException {
+    public void createProductBatch(ProductBatchDTO productBatch) throws DALException {
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
 
             PreparedStatement pStmt = connection.prepareStatement("INSERT INTO product_batches (expiration_date, product_batch_amount_in_stk, recipe_id) VALUES(?,?,?)");
@@ -84,7 +85,7 @@ public class ProductBatchDAO implements Serializable{
         }
     }
 
-    public void updateProductBatchAmount(ProductBatchDTO productBatch) throws IUserDAO.DALException {
+    public void updateProductBatchAmount(ProductBatchDTO productBatch) throws DALException {
 
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
 
@@ -101,7 +102,7 @@ public class ProductBatchDAO implements Serializable{
         }
     }
 
-    public void deleteProductBatch(int productBatchId) throws IUserDAO.DALException {
+    public void deleteProductBatch(int productBatchId) throws DALException {
 
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
 
