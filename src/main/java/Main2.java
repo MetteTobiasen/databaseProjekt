@@ -21,8 +21,6 @@ public class Main2 {
 //        userDAO.updateUser(user);
 //System.out.println(user.toString());
 
-
-
         RecipeDAO recipeDAO = new RecipeDAO();
         RecipeDTO recipe = new RecipeDTO();
         recipe.setRecipeName("Rabbit stew");

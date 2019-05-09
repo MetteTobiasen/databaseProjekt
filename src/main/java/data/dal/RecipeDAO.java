@@ -40,12 +40,7 @@ public class RecipeDAO implements Serializable {
             ResultSet resultSet = pStmt.executeQuery();
             resultSet.next();
 
-//            recipe = new RecipeDTO(recipeId, resultSet.getString(2), resultSet.getDate(3));       //kan man ikke bare gøre det her?
-            recipe = new RecipeDTO();
-            recipe.setRecipeId(recipeId);
-            recipe.setRecipeName(resultSet.getString(2));
-            recipe.setEndDate(resultSet.getDate(3));
-
+            recipe = new RecipeDTO(recipeId, resultSet.getString(2), resultSet.getDate(3));
         } catch (SQLException e){
             e.printStackTrace();
         }
