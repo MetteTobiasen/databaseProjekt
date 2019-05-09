@@ -73,7 +73,7 @@ public class ProductBatchDAO implements Serializable{
             PreparedStatement pStmt = connection.prepareStatement("INSERT INTO product_batches (expiration_date, product_batch_amount_in_stk, recipe_id) VALUES(?,?,?)");
 
             //pStmt.setInt(1, productBatch.getProductBatchId());
-            pStmt.setDate(1, (Date) productBatch.getExpirationDate());
+            pStmt.setDate(1, productBatch.getExpirationDate());
             pStmt.setInt(2 , productBatch.getProductBatchAmount());
             pStmt.setInt(3, productBatch.getRecipeId());
 
@@ -91,7 +91,7 @@ public class ProductBatchDAO implements Serializable{
             PreparedStatement pStmt = connection.prepareStatement("UPDATE product_batches SET product_batch_amount = ?, expiration_date = ?, recipe_id = ? WHERE product_batch_id = " + productBatch.getProductBatchId());
 
             pStmt.setInt(1, productBatch.getProductBatchAmount());
-            pStmt.setDate(2, (Date) productBatch.getExpirationDate());
+            pStmt.setDate(2, productBatch.getExpirationDate());
             pStmt.setInt(3, productBatch.getRecipeId());
 
             pStmt.executeUpdate();

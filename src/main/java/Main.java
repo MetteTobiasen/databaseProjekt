@@ -7,7 +7,7 @@ import data.dto.RoleDTO;
 import data.dto.UserDTO;
 import sun.util.calendar.LocalGregorianCalendar;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Main {
 
@@ -17,11 +17,12 @@ public class Main {
 
         //userDAO.createUser(user);
 
-        java.sql.Date date = new java.sql.Date(2019-12-12);
 
         //tester createProductBatch in productBatchDAO
         ProductBatchDAO productBatchDAO = new ProductBatchDAO();
-        ProductBatchDTO productBatch = new ProductBatchDTO(1,date,23,3);
+        String date = "2019-1-2";
+
+        ProductBatchDTO productBatch = new ProductBatchDTO(1, Date.valueOf(date),23,4);
 
         productBatchDAO.createProductBatch(productBatch);
         System.out.println(productBatchDAO.getProductBatch(2));
