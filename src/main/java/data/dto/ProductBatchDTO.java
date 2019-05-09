@@ -5,11 +5,11 @@ import java.util.Date;
 public class ProductBatchDTO {
 
     private int productBatchId;
-    private java.sql.Date expirationDate;
+    private Date expirationDate;
     private int productBatchAmount;
     private int recipeId;
 
-    public ProductBatchDTO(int productBatchId, java.sql.Date expirationDate, int productBatchAmount, int recipeId){
+    public ProductBatchDTO(int productBatchId, Date expirationDate, int productBatchAmount, int recipeId){
         this.productBatchId = productBatchId;
         this.expirationDate = expirationDate;
         this.productBatchAmount = productBatchAmount;
@@ -28,13 +28,14 @@ public class ProductBatchDTO {
         this.productBatchId = productBatchId;
     }
 
-    public java.sql.Date getExpirationDate(){
+    public Date getExpirationDate(){
         return expirationDate;
     }
 
-    public void setExpirationDate(java.sql.Date expirationDate){
+    public void setExpirationDate(Date expirationDate){
         this.expirationDate = expirationDate;
     }
+
     public int getProductBatchAmount(){
         return productBatchAmount;
     }

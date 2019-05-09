@@ -17,14 +17,16 @@ public class Main {
 
         //userDAO.createUser(user);
 
+        java.sql.Date date = new java.sql.Date(2019-12-12);
+
         //tester createProductBatch in productBatchDAO
         ProductBatchDAO productBatchDAO = new ProductBatchDAO();
-        //ProductBatchDTO productBatch = new ProductBatchDTO(1,new java.sql.Date(2019-8-5),23,3);
+        ProductBatchDTO productBatch = new ProductBatchDTO(1,date,23,3);
 
-        //productBatchDAO.createProductBatch(productBatch);
-        //System.out.println(productBatchDAO.getProductBatch(2));
+        productBatchDAO.createProductBatch(productBatch);
+        System.out.println(productBatchDAO.getProductBatch(2));
 
-        RoleDAO roleDAO = new RoleDAO();
+        /*RoleDAO roleDAO = new RoleDAO();
         RoleDTO role = new RoleDTO(5,"admin");
 
         roleDAO.createRole(role);
@@ -35,6 +37,7 @@ public class Main {
 
 
         System.out.println(roleDAO.getRoleList());
+        */
 
 
 
