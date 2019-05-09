@@ -30,7 +30,7 @@ public class ProductBatchDAO implements Serializable{
 
             productBatch = new ProductBatchDTO();
             productBatch.setProductBatchId(productBatchId);
-            productBatch.setExpirationDate(resultset.getString(2));
+            productBatch.setExpirationDate(resultset.getDate(2));
             productBatch.setProductBatchAmount(resultset.getInt(3));
             productBatch.setRecipeId(resultset.getInt(4));
 
@@ -55,7 +55,7 @@ public class ProductBatchDAO implements Serializable{
                 productBatch = new ProductBatchDTO();
                 productBatch.setProductBatchId(resultset.getInt(1));
                 productBatch.setProductBatchAmount(resultset.getInt(2));
-                productBatch.setExpirationDate(resultset.getString(3));
+                productBatch.setExpirationDate(resultset.getDate(3));
                 productBatch.setRecipeId(resultset.getInt(4));
 
                 // adds productBatches to productBatchList
