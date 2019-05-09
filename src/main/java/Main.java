@@ -20,7 +20,7 @@ public class Main {
 
         //tester createProductBatch in productBatchDAO
         ProductBatchDAO productBatchDAO = new ProductBatchDAO();
-        String date = "2019-1-2";
+        String date = "2019-10-12";
 
         ProductBatchDTO productBatch = new ProductBatchDTO(1, Date.valueOf(date),23,4);
 

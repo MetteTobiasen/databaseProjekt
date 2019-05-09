@@ -1,5 +1,6 @@
 package data.dal;
 
+import data.dto.DALException;
 import data.dto.UserDTO;
 import data.dto.RoleDTO;
 import data.dal.RoleDAO;
@@ -16,7 +17,7 @@ public class UserRoleDAO implements Serializable {
     private final String userName = "user=s185131";
     private final String pass = "password=f641omiIhm3Ly1oQR5khj";
 
-    public void createUserRoles(UserRoleDTO userRole, int userId) throws IUserDAO.DALException {
+    public void createUserRoles(UserRoleDTO userRole, int userId) throws DALException {
         try (Connection connection = DriverManager.getConnection(url + userName + "&" + pass)) {
             PreparedStatement pStmt = connection.prepareStatement("INSERT INTO user_roles VALUES(?,?) WHERE user_id = " + userId);
 
@@ -29,7 +30,7 @@ public class UserRoleDAO implements Serializable {
         }
 
 
-        /*public UserRoleDAO getUserRoles ( int userId) throws IUserDAO.DALException {
+        public UserRoleDAO getUserRoles(int userId) throws DALException {
 
             UserDTO user = null;
             RoleDTO role = null;
@@ -48,11 +49,11 @@ public class UserRoleDAO implements Serializable {
                 e.printStackTrace();
             }
 
-            return null;
+
         }
 
 
     }
-    */
+
     }
 }
