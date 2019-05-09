@@ -40,15 +40,6 @@ public class Main {
         System.out.println(roleDAO.getRoleList());
         */
 
-
-
-
-
-
-
-
-
-
        //System.out.println(user.toString());
     }
 
