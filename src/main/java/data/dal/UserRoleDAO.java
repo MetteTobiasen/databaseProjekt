@@ -29,7 +29,7 @@ public class UserRoleDAO implements Serializable {
         }
 
 
-        /*public UserRoleDAO getUserRoles ( int userId) throws IUserDAO.DALException {
+        public UserRoleDAO getUserRoles(int userId) throws IUserDAO.DALException {
 
             UserDTO user = null;
             RoleDTO role = null;
@@ -48,11 +48,11 @@ public class UserRoleDAO implements Serializable {
                 e.printStackTrace();
             }
 
-            return null;
+
         }
 
 
     }
-    */
+
     }
 }
