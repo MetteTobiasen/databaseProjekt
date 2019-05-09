@@ -1,5 +1,6 @@
 package data.dal;
 
+import data.dto.DALException;
 import data.dto.RoleDTO;
 
 import javax.xml.transform.Result;
@@ -13,7 +14,7 @@ public class RoleDAO implements Serializable{
     private final String userName= "user=s185131";
     private final String pass = "password=f641omiIhm3Ly1oQR5khj";
 
-public void createRole(RoleDTO role)throws IUserDAO.DALException {
+public void createRole(RoleDTO role)throws DALException {
     try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
         PreparedStatement pStmt = connection.prepareStatement("INSERT INTO roles_db VALUES(?,?)");
 
@@ -28,7 +29,7 @@ public void createRole(RoleDTO role)throws IUserDAO.DALException {
     }
 }
 
-public List<RoleDTO> getRoleList() throws IUserDAO.DALException{
+public List<RoleDTO> getRoleList() throws DALException{
     List<RoleDTO> roles = new ArrayList<>();
     RoleDTO role = null;
 
@@ -52,7 +53,7 @@ public List<RoleDTO> getRoleList() throws IUserDAO.DALException{
     return roles;
 }
 
-public RoleDTO getRole(int roleId) throws IUserDAO.DALException{
+public RoleDTO getRole(int roleId) throws DALException{
     RoleDTO role = null;
     try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
         PreparedStatement pStmt = connection.prepareStatement("SELECT * FROM roles_db WHERE role_id = ?");
@@ -72,7 +73,7 @@ public RoleDTO getRole(int roleId) throws IUserDAO.DALException{
     return role;
 }
 
-public void updateRole(RoleDTO role) throws IUserDAO.DALException{
+public void updateRole(RoleDTO role) throws DALException{
     try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
 
         PreparedStatement pStmt = connection.prepareStatement("UPDATE roles_db SET rolename = ? WHERE role_id = ?");
@@ -86,7 +87,7 @@ public void updateRole(RoleDTO role) throws IUserDAO.DALException{
     }
 }
 
-public void deleteRole(int roleId) throws IUserDAO.DALException{
+public void deleteRole(int roleId) throws DALException{
     try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
 
         PreparedStatement pStmt = connection.prepareStatement("DELETE FROM roles_db WHERE role_id = " + roleId);

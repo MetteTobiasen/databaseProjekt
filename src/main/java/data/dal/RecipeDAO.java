@@ -1,5 +1,6 @@
 package data.dal;
 
+import data.dto.DALException;
 import data.dto.RecipeDTO;
 import data.dto.UserDTO;
 
@@ -13,7 +14,7 @@ public class RecipeDAO implements Serializable {
     private final String userName= "user=s185131";
     private final String pass = "password=f641omiIhm3Ly1oQR5khj";
 
-    public void createRecipe(RecipeDTO recipe) throws IUserDAO.DALException {
+    public void createRecipe(RecipeDTO recipe) throws DALException {
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){   // med det syntax behøver man ikke lave final og connection.close()
             // try with resources
             PreparedStatement pStmt = connection.prepareStatement("INSERT INTO recipes (recipe_name) VALUES(?)");
@@ -27,7 +28,7 @@ public class RecipeDAO implements Serializable {
         }
     }
 
-    public RecipeDTO getRecipe(int recipeId) throws IUserDAO.DALException {
+    public RecipeDTO getRecipe(int recipeId) throws DALException {
         RecipeDTO recipe = null;
 
         // closes itself if something fails
@@ -47,7 +48,7 @@ public class RecipeDAO implements Serializable {
         return recipe;
     }
 
-    public List<RecipeDTO> getRecipeList() throws IUserDAO.DALException {
+    public List<RecipeDTO> getRecipeList() throws DALException {
 
         List<RecipeDTO> recipes = new ArrayList<>();
         RecipeDTO recipe = null;
@@ -72,7 +73,7 @@ public class RecipeDAO implements Serializable {
         } return recipes;
     }
 
-    public void updateRecipe(RecipeDTO recipe) throws IUserDAO.DALException {
+    public void updateRecipe(RecipeDTO recipe) throws DALException {
 
         try (Connection connection = DriverManager.getConnection(url + userName + "&" + pass)) {
 
@@ -88,7 +89,7 @@ public class RecipeDAO implements Serializable {
         }
     }
 
-    public void deleteRecipe(int recipeId) throws IUserDAO.DALException {
+    public void deleteRecipe(int recipeId) throws DALException {
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
 
             PreparedStatement pStmt = connection.prepareStatement("DELETE FROM recipes WHERE recipe_id = ?");
