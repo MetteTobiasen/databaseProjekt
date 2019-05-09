@@ -5,16 +5,15 @@ import java.util.Date;
 public class ProductBatchDTO {
 
     private int productBatchId;
+    private java.sql.Date expirationDate;
     private int productBatchAmount;
-    private Date expirationDate;
     private int recipeId;
 
-    public ProductBatchDTO(int productBatchId, int productBatchAmount, Date expirationDate, int recipeId){
+    public ProductBatchDTO(int productBatchId, java.sql.Date expirationDate, int productBatchAmount, int recipeId){
         this.productBatchId = productBatchId;
-        this.productBatchAmount = productBatchAmount;
         this.expirationDate = expirationDate;
+        this.productBatchAmount = productBatchAmount;
         this.recipeId = recipeId;
-
     }
 
     public ProductBatchDTO() {
@@ -29,21 +28,19 @@ public class ProductBatchDTO {
         this.productBatchId = productBatchId;
     }
 
+    public java.sql.Date getExpirationDate(){
+        return expirationDate;
+    }
+
+    public void setExpirationDate(java.sql.Date expirationDate){
+        this.expirationDate = expirationDate;
+    }
     public int getProductBatchAmount(){
         return productBatchAmount;
     }
 
     public void setProductBatchAmount(int productBatchAmount){
         this.productBatchAmount = productBatchAmount;
-    }
-
-
-    public Date getExpirationDate(){
-        return expirationDate;
-    }
-
-    public void setExpirationDate(Date expirationDate){
-        this.expirationDate = expirationDate;
     }
 
     public int getRecipeId() {
@@ -55,7 +52,7 @@ public class ProductBatchDTO {
     }
 
     public String toString() {
-        return "ProductBatchDTO [productBatchId = " + productBatchId + ", productBatchAmount = " + productBatchAmount + ", expirationDate = " + expirationDate + "]";
+        return "ProductBatchDTO [productBatchId = " + productBatchId + ", expirationDate = " + expirationDate + ", productBatchAmount = " + productBatchAmount + "]";
     }
 
     // manlger order status
