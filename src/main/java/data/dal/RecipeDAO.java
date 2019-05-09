@@ -49,7 +49,6 @@ public class RecipeDAO implements Serializable {
     }
 
     public List<RecipeDTO> getRecipeList() throws DALException {
-
         List<RecipeDTO> recipes = new ArrayList<>();
         RecipeDTO recipe = null;
 
@@ -59,11 +58,7 @@ public class RecipeDAO implements Serializable {
             ResultSet resultSet = pStmt.executeQuery();
 
             while(resultSet.next()){
-//                recipe = new RecipeDTO(resultSet.getInt(1),resultSet.getString(2),resultSet.getDate(3));      //kan man ikke bare gøre det her?
-                recipe = new RecipeDTO();
-                recipe.setRecipeId(resultSet.getInt(1));
-                recipe.setRecipeName(resultSet.getString(2));
-                recipe.setEndDate(resultSet.getDate(3));
+                recipe = new RecipeDTO(resultSet.getInt(1),resultSet.getString(2),resultSet.getDate(3));
 
                 recipes.add(recipe);
             }

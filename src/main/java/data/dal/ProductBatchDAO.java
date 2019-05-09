@@ -29,11 +29,7 @@ public class ProductBatchDAO implements Serializable{
 
             resultset.next();
 
-            productBatch = new ProductBatchDTO();
-            productBatch.setProductBatchId(productBatchId);
-            productBatch.setExpirationDate(resultset.getDate(2));
-            productBatch.setProductBatchAmount(resultset.getInt(3));
-            productBatch.setRecipeId(resultset.getInt(4));
+            productBatch = new ProductBatchDTO(productBatchId,resultset.getDate(2),resultset.getInt(3),resultset.getInt(4));
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -53,11 +49,7 @@ public class ProductBatchDAO implements Serializable{
             ResultSet resultset = pStmt.executeQuery();
 
             while(resultset.next()){
-                productBatch = new ProductBatchDTO();
-                productBatch.setProductBatchId(resultset.getInt(1));
-                productBatch.setProductBatchAmount(resultset.getInt(2));
-                productBatch.setExpirationDate(resultset.getDate(3));
-                productBatch.setRecipeId(resultset.getInt(4));
+                productBatch = new ProductBatchDTO(resultset.getInt(1),resultset.getDate(2),resultset.getInt(3),resultset.getInt(4));
 
                 // adds productBatches to productBatchList
                 productBatches.add(productBatch);
@@ -71,9 +63,9 @@ public class ProductBatchDAO implements Serializable{
     public void createProductBatch(ProductBatchDTO productBatch) throws DALException {
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
 
-            PreparedStatement pStmt = connection.prepareStatement("INSERT INTO product_batches (expiration_date, product_batch_amount_in_stk, recipe_id) VALUES(?,?,?)");
+            PreparedStatement pStmt = connection.prepareStatement(
+                    "INSERT INTO product_batches (expiration_date, product_batch_amount_in_stk, recipe_id) VALUES(?,?,?)");
 
-            //pStmt.setInt(1, productBatch.getProductBatchId());
             pStmt.setDate(1, productBatch.getExpirationDate());
             pStmt.setInt(2 , productBatch.getProductBatchAmount());
             pStmt.setInt(3, productBatch.getRecipeId());
@@ -89,12 +81,13 @@ public class ProductBatchDAO implements Serializable{
 
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
 
-            PreparedStatement pStmt = connection.prepareStatement("UPDATE product_batches SET product_batch_amount = ?, expiration_date = ?, recipe_id = ? WHERE product_batch_id = " + productBatch.getProductBatchId());
+            PreparedStatement pStmt = connection.prepareStatement(
+                    "UPDATE product_batches SET product_batch_amount = ?, expiration_date = ?, recipe_id = ? WHERE product_batch_id = ?");
 
             pStmt.setInt(1, productBatch.getProductBatchAmount());
             pStmt.setDate(2, productBatch.getExpirationDate());
             pStmt.setInt(3, productBatch.getRecipeId());
-
+            pStmt.setInt(4,productBatch.getProductBatchId());
             pStmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -106,7 +99,9 @@ public class ProductBatchDAO implements Serializable{
 
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
 
-            PreparedStatement pStmt = connection.prepareStatement("DELETE product_batches WHERE product_batch_id = " + productBatchId);
+            PreparedStatement pStmt = connection.prepareStatement("DELETE product_batches WHERE product_batch_id = ?");
+
+            pStmt.setInt(1, productBatchId);
 
             pStmt.executeUpdate();
 

@@ -59,7 +59,7 @@ public class ProductDAO implements Serializable {
 
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
 
-            PreparedStatement pStmt = connection.prepareStatement("SELECT * FROM products WHERE product_id = ? ");
+            PreparedStatement pStmt = connection.prepareStatement("SELECT * FROM products WHERE product_id = ?");
 
             pStmt.setInt(1, productId);
 

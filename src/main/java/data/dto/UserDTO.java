@@ -18,9 +18,6 @@ public class UserDTO implements Serializable, IUserDTO {
         this.userName = userName;
     }
 
-    public UserDTO() {
-
-    }
 
     @Override
     public int getUserId() {

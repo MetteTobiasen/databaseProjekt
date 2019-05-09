@@ -16,10 +16,9 @@ public class RoleDAO implements Serializable{
 
 public void createRole(RoleDTO role)throws DALException {
     try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
-        PreparedStatement pStmt = connection.prepareStatement("INSERT INTO roles_db VALUES(?,?)");
+        PreparedStatement pStmt = connection.prepareStatement("INSERT INTO roles_db (role_name) VALUES(?)");
 
-        pStmt.setInt(1, role.getRoleId());
-        pStmt.setString(2, role.getRoleName());
+        pStmt.setString(1, role.getRoleName());
 
         pStmt.executeUpdate();
 
@@ -44,8 +43,6 @@ public List<RoleDTO> getRoleList() throws DALException{
             role.setRoleName(resultSet.getString(2));
 
             roles.add(role);
-
-
         }
     } catch (SQLException e) {
         e.printStackTrace();
@@ -90,7 +87,9 @@ public void updateRole(RoleDTO role) throws DALException{
 public void deleteRole(int roleId) throws DALException{
     try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
 
-        PreparedStatement pStmt = connection.prepareStatement("DELETE FROM roles_db WHERE role_id = " + roleId);
+        PreparedStatement pStmt = connection.prepareStatement("DELETE FROM roles_db WHERE role_id = ?");
+
+        pStmt.setInt(1,roleId);
         pStmt.executeUpdate();
 
     } catch (SQLException e) {

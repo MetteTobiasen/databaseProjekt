@@ -20,7 +20,6 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
             // try with resources
             PreparedStatement pStmt = connection.prepareStatement("INSERT INTO users_db (username) VALUES(?)");
 
-            //pStmt.setInt(1, user.getUserId());
             pStmt.setString(1 ,user.getUserName());
 
             pStmt.executeUpdate();
@@ -45,9 +44,7 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
             ResultSet resultSet = pStmt.executeQuery();
             resultSet.next();
 
-                user = new UserDTO();
-                user.setUserId(userId);
-                user.setUserName(resultSet.getString(2));
+                user = new UserDTO(userId,resultSet.getString(2));
 
         } catch (SQLException e){
             e.printStackTrace();
@@ -57,7 +54,6 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
 
     @Override
     public List<UserDTO> getUserList() throws DALException {
-
         List<UserDTO> users = new ArrayList<>();
         UserDTO user = null;
 
@@ -67,10 +63,7 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
             ResultSet resultSet = pStmt.executeQuery();
 
             while(resultSet.next()){
-                user = new UserDTO();
-                user.setUserId(resultSet.getInt(1));
-                user.setUserName(resultSet.getString(2));
-
+                user = new UserDTO(resultSet.getInt(1),resultSet.getString(2));
                 users.add(user);
             }
 
