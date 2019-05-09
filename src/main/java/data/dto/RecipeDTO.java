@@ -1,15 +1,20 @@
 package data.dto;
 
+import java.sql.Date;
+
 public class RecipeDTO {
 
     private int recipeId;
     private String recipeName;
-    private int endDate;
+    private Date endDate;
 
-    public RecipeDTO(int recipeId, String recipeName, int endDate){
+    public RecipeDTO(int recipeId, String recipeName, Date endDate){
         this.recipeId = recipeId;
         this.recipeName = recipeName;
         this.endDate = endDate;
+    }
+
+    public RecipeDTO() {
     }
 
     public int getRecipeId(){
@@ -28,11 +33,11 @@ public class RecipeDTO {
         this.recipeName = recipeName;
     }
 
-    public int getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(int endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
