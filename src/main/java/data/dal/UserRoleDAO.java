@@ -106,6 +106,22 @@ public class UserRoleDAO implements Serializable {
         return roles;
     }
 
+    public void deleteUserRoles(int userId) throws DALException{
+        try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
+
+
+
+            PreparedStatement pStmt = connection.prepareStatement("DELETE FROM users_roles WHERE user_id = ?");
+
+            pStmt.setInt(1,userId);
+
+            pStmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
 
 }

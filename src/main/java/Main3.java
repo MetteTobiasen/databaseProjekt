@@ -13,9 +13,11 @@ public class Main3 {
 
         UserRoleDAO userRoleDAO = new UserRoleDAO();
 
-        userRoleDAO.createUserRoles(1,4);
+        //userRoleDAO.createUserRoles(1,4);
 
-        System.out.println(userRoleDAO.getRolesList(1));
+        userRoleDAO.deleteUserRoles(1);
+
+        //System.out.println(userRoleDAO.getRolesList(1));
 
     }
 }
