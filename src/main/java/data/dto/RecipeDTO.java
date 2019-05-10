@@ -14,6 +14,9 @@ public class RecipeDTO {
         this.endDate = endDate;
     }
 
+    public RecipeDTO(String recipeName){
+        this.recipeName = recipeName;
+    }
 
     public int getRecipeId(){
         return recipeId;

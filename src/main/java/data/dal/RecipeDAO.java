@@ -28,6 +28,20 @@ public class RecipeDAO implements Serializable {
         }
     }
 
+    public void createRecipe(String recipeName) throws DALException {
+        try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){   // med det syntax behøver man ikke lave final og connection.close()
+            // try with resources
+            PreparedStatement pStmt = connection.prepareStatement("INSERT INTO recipes (recipe_name) VALUES(?)");
+
+            pStmt.setString(1 , recipeName);
+
+            pStmt.executeUpdate();
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
     public RecipeDTO getRecipe(int recipeId) throws DALException {
         RecipeDTO recipe = null;
 
@@ -42,6 +56,26 @@ public class RecipeDAO implements Serializable {
             resultSet.next();
 
             recipe = new RecipeDTO(recipeId, resultSet.getString(2), resultSet.getDate(3));
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return recipe;
+    }
+
+    public RecipeDTO getRecipe(String recipeName) throws DALException {
+        RecipeDTO recipe = null;
+
+        // closes itself if something fails
+        try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
+
+            PreparedStatement pStmt = connection.prepareStatement(
+                    "SELECT * FROM recipes WHERE recipe_name = ?");
+
+            pStmt.setString(1, recipeName);
+            ResultSet resultSet = pStmt.executeQuery();
+            resultSet.next();
+
+            recipe = new RecipeDTO(resultSet.getInt(1), recipeName, resultSet.getDate(3));
         } catch (SQLException e){
             e.printStackTrace();
         }

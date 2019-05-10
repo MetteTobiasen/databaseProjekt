@@ -83,8 +83,7 @@ public class UserRoleDAO implements Serializable {
 
     public List<UserRoleDTO> getRolesList(int userId)throws DALException{
         List<UserRoleDTO> roles = new ArrayList<>();
-        UserRoleDTO role = null;
-
+        UserRoleDTO roleId = null;
 
         try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
 
@@ -95,9 +94,11 @@ public class UserRoleDAO implements Serializable {
             pStmt.setInt(1, userId);
             ResultSet resultset = pStmt.executeQuery();
 
+
             while(resultset.next()){
-                role = new UserRoleDTO(resultset.getInt(1));
-                roles.add(role);
+                roleId = new UserRoleDTO(resultset.getInt(1));
+                roles.add(roleId);
+
             }
 
         } catch (SQLException e) {
