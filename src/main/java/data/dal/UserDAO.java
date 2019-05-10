@@ -1,7 +1,9 @@
 package data.dal;
 
+import data.dto.DALException;
 import data.dto.IUserDTO;
 import data.dto.UserDTO;
+
 
 
 import java.io.Serializable;
@@ -93,13 +95,18 @@ public class UserDAO implements Serializable, data.dal.IUserDAO{
     @Override
     public void deleteUser(int userId) throws DALException {
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
+            UserRoleDAO userRoleDAO = new UserRoleDAO();
 
-            PreparedStatement pStmt = connection.prepareStatement("DELETE FROM users_db WHERE user_id = ?");
+            userRoleDAO.deleteUserRoles(userId);
 
-            pStmt.setInt(1, userId);
-            pStmt.executeUpdate();
+            PreparedStatement pStmt1 = connection.prepareStatement("DELETE FROM users_db WHERE user_id = ?");
+            pStmt1.setInt(1, userId);
+            pStmt1.executeUpdate();
 
         }catch (SQLException e){
+            e.printStackTrace();
+
+        } catch (data.dto.DALException e) {
             e.printStackTrace();
         }
     }

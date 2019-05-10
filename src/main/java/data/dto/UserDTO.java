@@ -22,6 +22,10 @@ public class UserDTO implements Serializable, IUserDTO {
         this.userId = userId;
     }
 
+    public UserDTO(String userName){
+        this.userName = userName;
+    }
+
     public UserDTO() {
 
     }
