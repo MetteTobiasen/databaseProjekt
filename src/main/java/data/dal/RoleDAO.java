@@ -70,6 +70,27 @@ public RoleDTO getRole(int roleId) throws DALException{
     return role;
 }
 
+public RoleDTO getRoleName(int roleId) throws DALException{
+    RoleDTO roleName = null;
+
+    try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
+        PreparedStatement pStmt = connection.prepareStatement("SELECT rolename FROM roles_db WHERE role_id = ?");
+
+        pStmt.setInt(1, roleId);
+        ResultSet resultSet = pStmt.executeQuery();
+        resultSet.next();
+
+        roleName = new RoleDTO();
+        roleName.setRoleName(resultSet.getString(2));
+
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return roleName;
+
+}
+
 public void updateRole(RoleDTO role) throws DALException{
     try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
 

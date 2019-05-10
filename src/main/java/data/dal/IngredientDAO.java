@@ -5,10 +5,7 @@ import data.dto.IngredientDTO;
 import data.dto.UserDTO;
 
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class IngredientDAO implements Serializable {
 
@@ -28,6 +25,27 @@ public class IngredientDAO implements Serializable {
         } catch (SQLException e){
             e.printStackTrace();
         }
+    }
+
+    public IngredientDTO getIngredient(int ingredientId) throws DALException {
+        IngredientDTO ingredient = null;
+
+        // closes itself if something fails
+        try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
+
+            PreparedStatement pStmt = connection.prepareStatement(
+                    "SELECT * FROM ingredients WHERE ingredient_id = ?");
+
+            pStmt.setInt(1, ingredientId);
+            ResultSet resultSet = pStmt.executeQuery();
+            resultSet.next();
+
+            ingredient = new IngredientDTO(ingredientId,resultSet.getString(2));
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return ingredient;
     }
 
 }

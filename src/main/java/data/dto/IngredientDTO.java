@@ -2,34 +2,36 @@ package data.dto;
 
 public class IngredientDTO {
 
-    private String ressourceName;
-    private int recipeId;
+    private int ingredientId;
+    private String ingredientName;
 
-    public IngredientDTO(String ressourceName, int recipeId){
-        this.ressourceName = ressourceName;
-        this.recipeId = recipeId;
+
+    public IngredientDTO(int recipeId,String ressourceName){
+        this.ingredientId = ingredientId;
+        this.ingredientName = ingredientName;
+
 
     }
 
     public String getRessourceName() {
-        return ressourceName;
+        return ingredientName;
     }
 
-    public void setRessourceName(String ressourceName) {
-        this.ressourceName = ressourceName;
+    public void setRessourceName(String ingredientName) {
+        this.ingredientName = ingredientName;
     }
 
-    public int getRecipeId() {
-        return recipeId;
+    public int getIngredientId() {
+        return ingredientId;
     }
 
-    public void setRecipeId(int recipeId) {
-        this.recipeId = recipeId;
+    public void setIngredientId(int ingredientId) {
+        this.ingredientId = ingredientId;
     }
 
     @Override
     public String toString() {
-        return "IngredientDTO [ressourceName = " + ressourceName +  " recipeId = " + recipeId + "]";
+        return "IngredientDTO [ingredientId = " + ingredientId +  " ingredientName = " + ingredientId + "]";
     }
 
 }
