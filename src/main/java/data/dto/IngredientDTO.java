@@ -6,18 +6,24 @@ public class IngredientDTO {
     private String ingredientName;
 
 
-    public IngredientDTO(int recipeId,String ressourceName){
+    public IngredientDTO(int ingredientId, String ingredientName){
         this.ingredientId = ingredientId;
         this.ingredientName = ingredientName;
-
-
     }
 
-    public String getRessourceName() {
+    public IngredientDTO(String ingredientName){
+        this.ingredientName = ingredientName;
+    }
+
+    public IngredientDTO(int ingredientId){
+        this.ingredientId = ingredientId;
+    }
+
+    public String getIngredientName() {
         return ingredientName;
     }
 
-    public void setRessourceName(String ingredientName) {
+    public void setIngredientName(String ingredientName) {
         this.ingredientName = ingredientName;
     }
 
@@ -31,7 +37,7 @@ public class IngredientDTO {
 
     @Override
     public String toString() {
-        return "IngredientDTO [ingredientId = " + ingredientId +  " ingredientName = " + ingredientId + "]";
+        return  " ingredientName = " + ingredientName;
     }
 
 }
