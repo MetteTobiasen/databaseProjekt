@@ -88,7 +88,7 @@ public class RecipeDAO implements Serializable {
 
         try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
 
-            PreparedStatement pStmt = connection.prepareStatement("SELECT * FROM recipes");
+            PreparedStatement pStmt = connection.prepareStatement("SELECT * FROM recipes WHERE end_date = \"9999-12-31\"");
             ResultSet resultSet = pStmt.executeQuery();
 
             while(resultSet.next()){
@@ -101,6 +101,27 @@ public class RecipeDAO implements Serializable {
             e.printStackTrace();
         } return recipes;
     }
+
+    public List<RecipeDTO> getOldRecipeList() throws DALException {
+        List<RecipeDTO> recipes = new ArrayList<>();
+        RecipeDTO recipe = null;
+
+        try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
+
+            PreparedStatement pStmt = connection.prepareStatement("SELECT * FROM recipes WHERE end_date <> \"9999-12-31\"");
+            ResultSet resultSet = pStmt.executeQuery();
+
+            while(resultSet.next()){
+                recipe = new RecipeDTO(resultSet.getInt(1),resultSet.getString(2),resultSet.getDate(3));
+
+                recipes.add(recipe);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } return recipes;
+    }
+
 
     public void updateRecipe(RecipeDTO recipe) throws DALException {
 
