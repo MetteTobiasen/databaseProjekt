@@ -18,6 +18,13 @@ public class ProductBatchDTO {
         this.status = status;
     }
 
+    public ProductBatchDTO(int productBatchId, Date expirationDate, int productBatchAmount, int recipeId){
+        this.productBatchId = productBatchId;
+        this.expirationDate = expirationDate;
+        this.productBatchAmount = productBatchAmount;
+        this.recipeId = recipeId;
+    }
+
 
     public int getProductBatchId(){
         return productBatchId;
