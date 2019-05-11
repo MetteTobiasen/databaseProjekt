@@ -131,6 +131,12 @@ public class BusinessLogic {
     /** -produktionsleder-
      *
      */
+    public ProductBatchDTO createProductBatch() {
+
+
+        return null;
+    }
+
 
 
 }
