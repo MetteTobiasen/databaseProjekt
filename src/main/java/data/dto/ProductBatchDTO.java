@@ -8,12 +8,14 @@ public class ProductBatchDTO {
     private Date expirationDate;
     private int productBatchAmount;
     private int recipeId;
+    private String status;
 
-    public ProductBatchDTO(int productBatchId, Date expirationDate, int productBatchAmount, int recipeId){
+    public ProductBatchDTO(int productBatchId, Date expirationDate, int productBatchAmount, int recipeId, String status){
         this.productBatchId = productBatchId;
         this.expirationDate = expirationDate;
         this.productBatchAmount = productBatchAmount;
         this.recipeId = recipeId;
+        this.status = status;
     }
 
 
@@ -47,6 +49,10 @@ public class ProductBatchDTO {
 
     public void setRecipeId(int recipeId) {
         this.recipeId = recipeId;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public String toString() {

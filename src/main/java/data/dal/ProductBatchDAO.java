@@ -86,7 +86,7 @@ public class ProductBatchDAO implements IProductBatchDAO {
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
 
             PreparedStatement pStmt = connection.prepareStatement(
-                    "UPDATE product_batches SET product_batch_amount = ?, expiration_date = ?, recipe_id = ? WHERE product_batch_id = ?");
+                    "UPDATE product_batches SET product_batch_amount_in_stk = ?, expiration_date = ?, recipe_id = ? WHERE product_batch_id = ?");
 
             pStmt.setInt(1, productBatch.getProductBatchAmount());
             pStmt.setDate(2, productBatch.getExpirationDate());
@@ -115,6 +115,21 @@ public class ProductBatchDAO implements IProductBatchDAO {
         }
     }
 
+    @Override
+    public void updateProductBatchStatus(ProductBatchDTO productBatch) throws DALException {
+        try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
+
+            PreparedStatement pStmt = connection.prepareStatement(
+                    "UPDATE product_batches SET order_status = ? WHERE product_batch_id = ?");
+
+            pStmt.setString(1, productBatch.getStatus());
+            pStmt.setInt(2,productBatch.getProductBatchId());
+            pStmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
 }

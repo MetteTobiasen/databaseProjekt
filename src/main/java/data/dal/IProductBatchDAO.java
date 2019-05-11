@@ -16,4 +16,6 @@ public interface IProductBatchDAO extends Serializable {
     void updateProductBatchAmount(ProductBatchDTO productBatch) throws DALException;
 
     void deleteProductBatch(int productBatchId) throws DALException;
+
+    void updateProductBatchStatus(ProductBatchDTO productBatch) throws DALException;
 }
