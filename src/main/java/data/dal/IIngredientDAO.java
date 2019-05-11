@@ -19,3 +19,4 @@ public interface IIngredientDAO extends Serializable {
 
     void deleteIngredient(int ingredientId) throws DALException;
 }
+
