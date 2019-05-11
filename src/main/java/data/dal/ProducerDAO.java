@@ -95,12 +95,12 @@ public class ProducerDAO implements IProducerDAO {
     }
 
     @Override
-    public void deleteProducer(int producerName) throws DALException{
+    public void deleteProducer(String producerName) throws DALException{
         try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
 
             PreparedStatement pStmt = connection.prepareStatement("DELETE FROM producers WHERE producer_name = ?");
 
-            pStmt.setInt(1,producerName);
+            pStmt.setString(1,producerName);
             pStmt.executeUpdate();
 
         } catch (SQLException e) {

@@ -14,5 +14,5 @@ public interface IProducerDAO {
 
     void updateProducer(ProducerDTO producer) throws DALException;
 
-    void deleteProducer(int producerName) throws DALException;
+    void deleteProducer(String producerName) throws DALException;
 }

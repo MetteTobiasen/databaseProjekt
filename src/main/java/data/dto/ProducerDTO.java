@@ -51,6 +51,6 @@ public class ProducerDTO {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "[ ProducerDTO [ producerName = " + producerName + ", email = " + email + ", areaCode = " + areaCode + ", phoneNumber = " + phoneNumber + " ]";
     }
 }

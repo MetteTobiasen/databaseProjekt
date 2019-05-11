@@ -17,20 +17,38 @@ public class RessourceBatchDTO {
         this.ingredientId = ingredientId;
     }
 
-    public int getRessourceId(){
+    public RessourceBatchDTO(int ressourceBatchAmount, int isRest, String producerName, int ingredientId){
+        this.ressourceBatchAmount = ressourceBatchAmount;
+        this.isRest = isRest;
+        this.producerName = producerName;
+        this.ingredientId = ingredientId;
+    }
+
+    public RessourceBatchDTO(int ressourceBatchAmount, int isRest){
+        this.ressourceBatchAmount = ressourceBatchAmount;
+        this.isRest = isRest;
+    }
+
+    public RessourceBatchDTO(int ressourceBatchId, int ressourceBatchAmount, int isRest){
+        this.ressourceBatchId = ressourceBatchId;
+        this.ressourceBatchAmount = ressourceBatchAmount;
+        this.isRest = isRest;
+    }
+
+    public int getRessourceBatchId(){
         return ressourceBatchId;
     }
 
-    public void setRessourceId(int ressourceId){
-        this.ressourceBatchId = ressourceId;
+    public void setRessourceBatchId(int ressourceBatchId){
+        this.ressourceBatchId = ressourceBatchId;
     }
 
-    public int getRessourceAmount(){
+    public int getRessourceBatchAmount(){
         return ressourceBatchAmount;
     }
 
-    public void setRessourceAmount(int ressourceAmount){
-        this.ressourceBatchAmount = ressourceAmount;
+    public void setRessourceBatchAmount(int ressourceBatchAmount){
+        this.ressourceBatchAmount = ressourceBatchAmount;
     }
 
     public int getIsRest() {
@@ -54,7 +72,7 @@ public class RessourceBatchDTO {
     }
 
     public String toString(){
-        return "RessourceBatchDTO [ressourceBatchId = " + ressourceBatchId + ", ressourceBatchAmount = " + ressourceBatchAmount + " isRest = " + isRest + ", producerName = " + producerName + ", ingredientId" + ingredientId + "]";
+        return "RessourceBatchDTO [ressourceBatchId = " + ressourceBatchId + ", ressourceBatchAmount = " + ressourceBatchAmount + " isRest = " + isRest + ", producerName = " + producerName + ", ingredientId = " + ingredientId + "]";
     }
 
     //mangler dato/is rest status

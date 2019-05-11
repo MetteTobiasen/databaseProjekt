@@ -9,9 +9,9 @@ public class MainTesterIngredient {
 
         IngredientDAO ingredientDAO = new IngredientDAO();
 
-        //IngredientDTO ingredient = new IngredientDTO("Peber");
+        IngredientDTO ingredient = new IngredientDTO("Salt");
 
-        //ingredientDAO.createIngredient(ingredient);
+        ingredientDAO.createIngredient(ingredient);
 
         //System.out.println(ingredientDAO.getIngredient(1));
 
