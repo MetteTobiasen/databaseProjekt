@@ -35,7 +35,6 @@ public class UserRoleDAO implements IUserRoleDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override
@@ -115,8 +114,6 @@ public class UserRoleDAO implements IUserRoleDAO {
     public void deleteUserRoles(int userId) throws DALException{
         try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
 
-
-
             PreparedStatement pStmt = connection.prepareStatement("DELETE FROM users_roles WHERE user_id = ?");
 
             pStmt.setInt(1,userId);
@@ -127,7 +124,4 @@ public class UserRoleDAO implements IUserRoleDAO {
         }
 
     }
-
-
-
 }
