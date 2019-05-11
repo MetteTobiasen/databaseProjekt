@@ -102,17 +102,27 @@ public class BusinessLogic {
     }
 
     /** -laborant-
+     * A user tries to change productBatchStatus.
+     * Only users with a(n) "laborant" role is allowed to change status.
      *
+     * If operation is successful, the updated productBatch is returned.
+     * In case of no success, null is returned.
      */
     public ProductBatchDTO changeProductionStatus(int userId, int productBatchId, String newStatus) throws DALException {
         List<RoleDTO> roles = getRolesByUserId(userId);
-        ProductBatchDTO productBatchDTO = null;
+        ProductBatchDTO productBatch = null;
 
         if (isUserAllowedAccess(roles, "laborant")) {
-            productBatchDAO.
+            productBatchDAO.getProductBatch(productBatchId);
+            ProductBatchDTO productBatchDTO = productBatchDAO.getProductBatch(productBatchId);
+            productBatch.setStatus(newStatus);
+
+            productBatchDAO.updateProductBatchStatus(productBatch);
+
+            productBatch = productBatchDAO.getProductBatch(productBatchId);
         }
 
-        return null;
+        return productBatch;
     }
 
 
