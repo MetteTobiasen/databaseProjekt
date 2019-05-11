@@ -9,12 +9,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IngredientDAO implements Serializable {
+public class IngredientDAO implements IIngredientDAO {
 
     private final String url = "jdbc:mysql://ec2-52-30-211-3.eu-west-1.compute.amazonaws.com/s185131?";
     private final String userName= "user=s185131";
     private final String pass = "password=f641omiIhm3Ly1oQR5khj";
 
+    @Override
     public void createIngredient(IngredientDTO ingredient) throws DALException {
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){   // med det syntax behøver man ikke lave final og connection.close()
 
@@ -29,6 +30,7 @@ public class IngredientDAO implements Serializable {
         }
     }
 
+    @Override
     public IngredientDTO getIngredient(int ingredientId) throws DALException {
         IngredientDTO ingredient = null;
 
@@ -50,6 +52,7 @@ public class IngredientDAO implements Serializable {
         return ingredient;
     }
 
+    @Override
     public IngredientDTO getIngredientName(int ingredientId) throws DALException{
         IngredientDTO ingredientName = null;
 
@@ -70,6 +73,7 @@ public class IngredientDAO implements Serializable {
         return ingredientName;
     }
 
+    @Override
     public List<IngredientDTO> getUserList() throws DALException {
         List<IngredientDTO> ingredients = new ArrayList<>();
         IngredientDTO ingredient = null;
@@ -90,6 +94,7 @@ public class IngredientDAO implements Serializable {
 
     }
 
+    @Override
     public void updateIngredientName(IngredientDTO ingredient) throws DALException {
 
         try (Connection connection = DriverManager.getConnection(url + userName + "&" + pass)) {
@@ -105,6 +110,7 @@ public class IngredientDAO implements Serializable {
         }
     }
 
+    @Override
     public void deleteIngredient(int ingredientId) throws DALException {
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
 

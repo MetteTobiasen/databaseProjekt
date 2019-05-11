@@ -9,11 +9,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoleDAO implements Serializable{
+public class RoleDAO implements IRoleDAO {
     private final String url = "jdbc:mysql://ec2-52-30-211-3.eu-west-1.compute.amazonaws.com/s185131?";
     private final String userName= "user=s185131";
     private final String pass = "password=f641omiIhm3Ly1oQR5khj";
 
+@Override
 public void createRole(RoleDTO role)throws DALException {
     try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
         PreparedStatement pStmt = connection.prepareStatement("INSERT INTO roles_db (rolename) VALUES(?)");
@@ -28,6 +29,7 @@ public void createRole(RoleDTO role)throws DALException {
     }
 }
 
+@Override
 public List<RoleDTO> getRoleList() throws DALException{
     List<RoleDTO> roles = new ArrayList<>();
     RoleDTO role = null;
@@ -50,6 +52,7 @@ public List<RoleDTO> getRoleList() throws DALException{
     return roles;
 }
 
+@Override
 public RoleDTO getRole(int roleId) throws DALException{
     RoleDTO role = null;
     try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
@@ -70,6 +73,7 @@ public RoleDTO getRole(int roleId) throws DALException{
     return role;
 }
 
+@Override
 public RoleDTO getRoleName(int roleId) throws DALException{
     RoleDTO roleName = null;
 
@@ -91,6 +95,7 @@ public RoleDTO getRoleName(int roleId) throws DALException{
 
 }
 
+@Override
 public void updateRole(RoleDTO role) throws DALException{
     try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
 
@@ -105,6 +110,7 @@ public void updateRole(RoleDTO role) throws DALException{
     }
 }
 
+@Override
 public void deleteRole(int roleId) throws DALException{
     try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
 
