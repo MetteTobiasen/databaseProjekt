@@ -12,11 +12,12 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserRoleDAO implements Serializable {
+public class UserRoleDAO implements IUserRoleDAO {
     private final String url = "jdbc:mysql://ec2-52-30-211-3.eu-west-1.compute.amazonaws.com/s185131?";
     private final String userName = "user=s185131";
     private final String pass = "password=f641omiIhm3Ly1oQR5khj";
 
+    @Override
     public void createUserRoles(int userId, int roleId) throws DALException {
 
         try (Connection connection = DriverManager.getConnection(url + userName + "&" + pass)) {
@@ -37,6 +38,7 @@ public class UserRoleDAO implements Serializable {
 
     }
 
+    @Override
     public UserDTO getUserIdFromUserDAO(int userId) throws DALException {
         UserDTO user = null;
 
@@ -57,6 +59,7 @@ public class UserRoleDAO implements Serializable {
         return user;
     }
 
+    @Override
     public RoleDTO getRoleIdFromUserDAO(int roleId) throws DALException {
         RoleDTO role = null;
 
@@ -81,6 +84,7 @@ public class UserRoleDAO implements Serializable {
 
 
 
+    @Override
     public List<UserRoleDTO> getRolesList(int userId)throws DALException{
         List<UserRoleDTO> roles = new ArrayList<>();
         UserRoleDTO roleId = null;
@@ -107,6 +111,7 @@ public class UserRoleDAO implements Serializable {
         return roles;
     }
 
+    @Override
     public void deleteUserRoles(int userId) throws DALException{
         try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
 

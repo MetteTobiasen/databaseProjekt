@@ -3,13 +3,18 @@ package data.dto;
 public class RessourceBatchDTO {
 
     private int ressourceBatchId;
-    private String ressourceBatchName;
     private int ressourceBatchAmount;
+    private int isRest;
+    private String producerName;
+    private int ingredientId;
 
-    public RessourceBatchDTO(int ressourceBatchId, String ressourceBatchName, int ressourceBatchAmount){
+
+    public RessourceBatchDTO(int ressourceBatchId, int ressourceBatchAmount, int isRest, String producerName, int ingredientId){
         this.ressourceBatchId = ressourceBatchId;
-        this.ressourceBatchName = ressourceBatchName;
         this.ressourceBatchAmount = ressourceBatchAmount;
+        this.isRest = isRest;
+        this.producerName = producerName;
+        this.ingredientId = ingredientId;
     }
 
     public int getRessourceId(){
@@ -20,14 +25,6 @@ public class RessourceBatchDTO {
         this.ressourceBatchId = ressourceId;
     }
 
-    public String getRessourceName(){
-        return ressourceBatchName;
-    }
-
-    public void setRessourceName(String ressourceName){
-        this.ressourceBatchName = ressourceName;
-    }
-
     public int getRessourceAmount(){
         return ressourceBatchAmount;
     }
@@ -36,8 +33,28 @@ public class RessourceBatchDTO {
         this.ressourceBatchAmount = ressourceAmount;
     }
 
+    public int getIsRest() {
+        return isRest;
+    }
+
+    public void setIsRest(int isRest) {
+        this.isRest = isRest;
+    }
+
+    public String getProducerName(){
+        return producerName;
+    }
+
+    public int getIngredientId() {
+        return ingredientId;
+    }
+
+    public void setIngredientId(int ingredientId) {
+        this.ingredientId = ingredientId;
+    }
+
     public String toString(){
-        return "RessourceBatchDTO [ressourceBatchId = " + ressourceBatchId + ", ressourceBatchName = " + ressourceBatchName + " resssourceBatchAmount = " + ressourceBatchAmount + "]";
+        return "RessourceBatchDTO [ressourceBatchId = " + ressourceBatchId + ", ressourceBatchAmount = " + ressourceBatchAmount + " isRest = " + isRest + ", producerName = " + producerName + ", ingredientId" + ingredientId + "]";
     }
 
     //mangler dato/is rest status

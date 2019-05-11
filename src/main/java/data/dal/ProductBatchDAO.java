@@ -8,13 +8,14 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductBatchDAO implements Serializable{
+public class ProductBatchDAO implements IProductBatchDAO {
 
     private final String url = "jdbc:mysql://ec2-52-30-211-3.eu-west-1.compute.amazonaws.com/s185131?";
     private final String userName= "user=s185131";
     private final String pass = "password=f641omiIhm3Ly1oQR5khj";
 
 
+    @Override
     public ProductBatchDTO getProductBatch(int productBatchId) throws DALException {
 
         ProductBatchDTO productBatch = null;
@@ -38,6 +39,7 @@ public class ProductBatchDAO implements Serializable{
     }
 
 
+    @Override
     public List<ProductBatchDTO> getProductBatchList() throws DALException {
         List<ProductBatchDTO> productBatches = new ArrayList<>();
         ProductBatchDTO productBatch = null;
@@ -60,6 +62,7 @@ public class ProductBatchDAO implements Serializable{
         return productBatches;
     }
 
+    @Override
     public void createProductBatch(ProductBatchDTO productBatch) throws DALException {
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
 
@@ -77,6 +80,7 @@ public class ProductBatchDAO implements Serializable{
         }
     }
 
+    @Override
     public void updateProductBatchAmount(ProductBatchDTO productBatch) throws DALException {
 
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
@@ -95,6 +99,7 @@ public class ProductBatchDAO implements Serializable{
         }
     }
 
+    @Override
     public void deleteProductBatch(int productBatchId) throws DALException {
 
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
