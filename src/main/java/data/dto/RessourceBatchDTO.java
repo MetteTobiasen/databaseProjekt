@@ -35,6 +35,10 @@ public class RessourceBatchDTO {
         this.isRest = isRest;
     }
 
+    public RessourceBatchDTO(int ressourceBatchId){
+        this.ressourceBatchId = ressourceBatchId;
+    }
+
     public int getRessourceBatchId(){
         return ressourceBatchId;
     }

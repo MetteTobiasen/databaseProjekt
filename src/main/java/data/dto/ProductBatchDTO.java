@@ -16,6 +16,9 @@ public class ProductBatchDTO {
         this.recipeId = recipeId;
     }
 
+    public ProductBatchDTO(int productBatchId){
+        this.productBatchId = productBatchId;
+    }
 
     public int getProductBatchId(){
         return productBatchId;
