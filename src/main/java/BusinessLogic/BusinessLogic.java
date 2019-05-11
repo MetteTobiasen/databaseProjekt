@@ -29,6 +29,7 @@ public class BusinessLogic {
         return roles;
     }
 
+
     /** -system-
      * Takes a list of roles, and checks if it corresponds
      * with the specified role allowed to take a certain action.
@@ -61,6 +62,7 @@ public class BusinessLogic {
         }
         return newRecipe;
     }
+
 
     /** -farmacuet-
      * A user tries to update a recipe.
@@ -124,8 +126,6 @@ public class BusinessLogic {
 
         return productBatch;
     }
-
-
 
 
     /** -produktionsleder-
