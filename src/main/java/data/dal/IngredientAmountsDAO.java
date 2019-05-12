@@ -98,7 +98,7 @@ public class IngredientAmountsDAO {
 
         try (Connection connection = DriverManager.getConnection(url + userName + "&" + pass)) {
 
-            PreparedStatement pStmt = connection.prepareStatement("UPDATE ingredient_amounts SET ingredient_amount_in_mg = ?, tolerance = ?, ingredient_id = ?, recipeId = ? WHERE ingredientId & recipeId = ?");
+            PreparedStatement pStmt = connection.prepareStatement("UPDATE ingredient_amounts SET ingredient_amount_in_mg = ?, tolerance = ?, ingredient_id = ?, recipeId = ? WHERE ingredientId AND recipeId = ?");
 
             pStmt.setInt(1, ingredientAmount.getIngredientAmount());
             pStmt.setInt(2, ingredientAmount.getTolerance());
@@ -114,7 +114,7 @@ public class IngredientAmountsDAO {
     public void deleteIngredientAmount(int ingredientId, int recipeId) throws DALException {
         try (Connection connection = DriverManager.getConnection(url + userName + "&" + pass)) {
 
-            PreparedStatement pStmt = connection.prepareStatement("DELETE FROM ingredient_amounts WHERE ingredient_id = ? & recipe = ?");
+            PreparedStatement pStmt = connection.prepareStatement("DELETE FROM ingredient_amounts WHERE ingredient_id = AND & recipe = ?");
             pStmt.setInt(1, ingredientId);
             pStmt.setInt(2, recipeId);
             pStmt.executeUpdate();
