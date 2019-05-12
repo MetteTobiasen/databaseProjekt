@@ -2,13 +2,13 @@ package data.dto;
 
 public class RessourceAmountsDTO {
 
-    private int ressourceBatchUsedAmount;
-    private int ressourceBatchId;
+    private double ressourceBatchUsedAmount;
+    private int ingredientId;
     private int productBatchId;
 
-    public RessourceAmountsDTO(int ressourceBatchUsedAmount, int ressourceBatchId, int productBatchId){
+    public RessourceAmountsDTO(double ressourceBatchUsedAmount, int ingredientId, int productBatchId){
         this.ressourceBatchUsedAmount = ressourceBatchUsedAmount;
-        this.ressourceBatchId = ressourceBatchId;
+        this.ingredientId = ingredientId;
         this.productBatchId = productBatchId;
     }
 
@@ -16,20 +16,20 @@ public class RessourceAmountsDTO {
         this.ressourceBatchUsedAmount = ressourceBatchUsedAmount;
     }
 
-    public int getRessourceBatchUsedAmount() {
+    public double getRessourceBatchUsedAmount() {
         return ressourceBatchUsedAmount;
     }
 
-    public void setRessourceBatchUsedAmount(int ressourceBatchUsedAmount) {
+    public void setRessourceBatchUsedAmount(double ressourceBatchUsedAmount) {
         this.ressourceBatchUsedAmount = ressourceBatchUsedAmount;
     }
 
-    public int getRessourceBatchId() {
-        return ressourceBatchId;
+    public int getIngredientId() {
+        return ingredientId;
     }
 
-    public void setRessourceBatchId(int ressourceBatchId) {
-        this.ressourceBatchId = ressourceBatchId;
+    public void setIngredientId(int ressourceBatchId) {
+        this.ingredientId = ressourceBatchId;
     }
 
     public int getProductBatchId() {
@@ -42,6 +42,6 @@ public class RessourceAmountsDTO {
 
     @Override
     public String toString() {
-        return "RessourceAmountsDTO [ ressourceBatchUsedAmount = " + ressourceBatchUsedAmount + ", ressourceBatchId = " + ressourceBatchId + ", productBatchId = " + productBatchId + " ]";
+        return "RessourceAmountsDTO [ ressourceBatchUsedAmount = " + ressourceBatchUsedAmount + ", ressourceBatchId = " + ingredientId + ", productBatchId = " + productBatchId + " ]";
     }
 }

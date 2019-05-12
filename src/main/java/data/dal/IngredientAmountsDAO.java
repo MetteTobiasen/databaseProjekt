@@ -71,7 +71,27 @@ public class IngredientAmountsDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } return ingredientAmounts;
+    }
 
+    public List<IngredientAmountsDTO> getIngredientAmounts(int recipeId) throws DALException {
+        List<IngredientAmountsDTO> ingredientAmounts = new ArrayList<>();
+        IngredientAmountsDTO ingredientAmount = null;
+
+        try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
+
+            PreparedStatement pStmt = connection.prepareStatement("SELECT * FROM ingredient_amounts WHERE recipe_id = ?");
+
+            pStmt.setInt(1,recipeId);
+            ResultSet resultSet = pStmt.executeQuery();
+
+            while(resultSet.next()){
+                ingredientAmount = new IngredientAmountsDTO(resultSet.getInt(1),resultSet.getInt(2), resultSet.getInt(3), resultSet.getInt(4));
+                ingredientAmounts.add(ingredientAmount);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } return ingredientAmounts;
     }
 
     public List<IngredientAmountsDTO> getIngredientAmountsListFromRecipe(int recipeId) throws DALException {

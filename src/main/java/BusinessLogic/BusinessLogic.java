@@ -16,6 +16,8 @@ public class BusinessLogic {
     RecipeDAO recipeDAO = new RecipeDAO();
     UserDAO userDAO = new UserDAO();
     ProductBatchDAO productBatchDAO = new ProductBatchDAO();
+    IngredientAmountsDAO ingredientAmountsDAO = new IngredientAmountsDAO();
+    RessourceAmountsDAO ressourceAmountsDAO  = new RessourceAmountsDAO();
 
 
     /** -system-
@@ -112,8 +114,10 @@ public class BusinessLogic {
      *
      * If operation is successful, the updated productBatch is returned.
      * In case of no success, null is returned.
+     *
+     * If product batch is under production, the used ressources are saved in the database.
      */
-    public ProductBatchDTO changeProductionStatus(int userId, int productBatchId, String newStatus) throws DALException {
+    public ProductBatchDTO updateProductionStatus(int userId, int productBatchId, String newStatus) throws DALException {
         List<RoleDTO> roles = getRolesByUserId(userId);
         ProductBatchDTO productBatch = null;
 
@@ -125,8 +129,22 @@ public class BusinessLogic {
             productBatchDAO.updateProductBatchStatus(productBatch);
 
             productBatch = productBatchDAO.getProductBatch(productBatchId);
-        }
 
+
+            if (newStatus.toLowerCase().equals("under produktion".toLowerCase())) {
+                int prodStk = productBatch.getProductBatchAmount();
+                List<IngredientAmountsDTO> ingredients = ingredientAmountsDAO.getIngredientAmounts(productBatch.getRecipeId());
+
+                for (int i = 0; i < ingredients.size(); i++) {
+                    int ingrAmount = ingredients.get(i).getIngredientAmount();
+
+                    double ressUsedAmount = (double) prodStk * ingrAmount * ingredients.get(i).getTolerance();
+
+                    RessourceAmountsDTO ressourceAmounts = new RessourceAmountsDTO(ressUsedAmount, ingredients.get(i).getIngredientId(),productBatchId);
+                    ressourceAmountsDAO.createRessourceAmount(ressourceAmounts);
+                }
+            }
+        }
         return productBatch;
     }
 
@@ -147,8 +165,6 @@ public class BusinessLogic {
             ProductBatchDTO productBatchDTO = new ProductBatchDTO(expirationDate, amountInStk, recipeId);
             productBatchDAO.createProductBatch(productBatchDTO);
 //            productBatch = productBatchDAO.getProductBatch(pBId);     //nok lige meget
-
-
 
         }
         return access;
