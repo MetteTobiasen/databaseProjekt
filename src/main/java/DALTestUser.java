@@ -1,16 +1,10 @@
 import data.dal.IUserDAO;
 import data.dto.UserDTO;
-import data.dto.IUserDTO;
 import data.dal.UserDAO;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 public class DALTestUser {
 
@@ -27,11 +21,6 @@ public class DALTestUser {
         String actual = receivedUser.getUserName();
         String expected = testUser.getUserName();
         assertEquals(expected, actual);
-
-    }
-
-    @Test
-    public void testGetUser() throws IUserDAO.DALException {
 
     }
 
