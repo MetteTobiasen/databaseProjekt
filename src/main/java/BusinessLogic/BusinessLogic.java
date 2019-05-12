@@ -108,6 +108,25 @@ public class BusinessLogic {
         return access;
     }
 
+
+    /** -administrator-
+     * A user tries to add a role to an existing user.
+     * Only users with a(n) "administrator" role is allowed to add roles.
+     *
+     * If user is allowed the operation, true is returned.
+     * In case of no access, false is returned.
+     */
+    public boolean addOneRole(int userId, int roleid) throws DALException {
+        List<RoleDTO> roles = getRolesByUserId(userId);
+
+        boolean access = isUserAllowedAccess(roles, "administrator");
+        if (access) {
+            userRoleDAO.createUserRoles(userId,roleid);
+        }
+        return access;
+    }
+
+
     /** -laborant-
      * A user tries to change productBatchStatus.
      * Only users with a(n) "laborant" role is allowed to change status.
