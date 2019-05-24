@@ -13,7 +13,7 @@ public interface IIngredientDAO extends Serializable {
 
     IngredientDTO getIngredientName(int ingredientId) throws DALException;
 
-    List<IngredientDTO> getUserList() throws DALException;
+    List<IngredientDTO> getIngredientList() throws DALException;
 
     void updateIngredientName(IngredientDTO ingredient) throws DALException;
 

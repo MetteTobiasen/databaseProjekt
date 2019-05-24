@@ -3,12 +3,12 @@ package data.dto;
 public class RessourceAmountsDTO {
 
     private double ressourceBatchUsedAmount;
-    private int ingredientId;
+    private int ressourceBatchId;
     private int productBatchId;
 
-    public RessourceAmountsDTO(double ressourceBatchUsedAmount, int ingredientId, int productBatchId){
+    public RessourceAmountsDTO(double ressourceBatchUsedAmount, int ressourceBatchId, int productBatchId){
         this.ressourceBatchUsedAmount = ressourceBatchUsedAmount;
-        this.ingredientId = ingredientId;
+        this.ressourceBatchId = ressourceBatchId;
         this.productBatchId = productBatchId;
     }
 
@@ -24,12 +24,12 @@ public class RessourceAmountsDTO {
         this.ressourceBatchUsedAmount = ressourceBatchUsedAmount;
     }
 
-    public int getIngredientId() {
-        return ingredientId;
+    public int getRessourceBatchId() {
+        return ressourceBatchId;
     }
 
-    public void setIngredientId(int ressourceBatchId) {
-        this.ingredientId = ressourceBatchId;
+    public void setRessourceBatchId(int ressourceBatchId) {
+        this.ressourceBatchId = ressourceBatchId;
     }
 
     public int getProductBatchId() {
@@ -42,6 +42,7 @@ public class RessourceAmountsDTO {
 
     @Override
     public String toString() {
-        return "RessourceAmountsDTO [ ressourceBatchUsedAmount = " + ressourceBatchUsedAmount + ", ressourceBatchId = " + ingredientId + ", productBatchId = " + productBatchId + " ]";
+        return "RessourceAmountsDTO [ ressourceBatchUsedAmount = " + ressourceBatchUsedAmount + ", ressourceBatchId = " + ressourceBatchId + ", productBatchId = " + productBatchId + " ]";
     }
+
 }

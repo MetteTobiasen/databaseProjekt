@@ -35,6 +35,9 @@ public class ProductBatchDTO {
         this.recipeId = recipeId;
     }
 
+    public ProductBatchDTO(Date expirationDate) {
+        this.expirationDate = expirationDate;
+    }
 
     public int getProductBatchId(){
         return productBatchId;

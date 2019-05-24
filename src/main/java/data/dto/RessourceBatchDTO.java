@@ -3,13 +3,13 @@ package data.dto;
 public class RessourceBatchDTO {
 
     private int ressourceBatchId;
-    private int ressourceBatchAmount;
+    private double ressourceBatchAmount;
     private int isRest;
     private String producerName;
     private int ingredientId;
 
 
-    public RessourceBatchDTO(int ressourceBatchId, int ressourceBatchAmount, int isRest, String producerName, int ingredientId){
+    public RessourceBatchDTO(int ressourceBatchId, double ressourceBatchAmount, int isRest, String producerName, int ingredientId){
         this.ressourceBatchId = ressourceBatchId;
         this.ressourceBatchAmount = ressourceBatchAmount;
         this.isRest = isRest;
@@ -47,11 +47,11 @@ public class RessourceBatchDTO {
         this.ressourceBatchId = ressourceBatchId;
     }
 
-    public int getRessourceBatchAmount(){
+    public double getRessourceBatchAmount(){
         return ressourceBatchAmount;
     }
 
-    public void setRessourceBatchAmount(int ressourceBatchAmount){
+    public void setRessourceBatchAmount(double ressourceBatchAmount){
         this.ressourceBatchAmount = ressourceBatchAmount;
     }
 

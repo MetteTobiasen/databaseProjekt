@@ -62,6 +62,29 @@ public class ProductBatchDAO implements IProductBatchDAO {
         return productBatches;
     }
 
+    public List<ProductBatchDTO> getProductBatchesWithStatus(String status) throws DALException {
+        List<ProductBatchDTO> productBatches = new ArrayList<>();
+        ProductBatchDTO productBatch = null;
+
+        try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
+
+            PreparedStatement pStmt = connection.prepareStatement("SELECT * FROM product_batches WHERE status = ?");
+
+            pStmt.setString(1,status);
+            ResultSet resultset = pStmt.executeQuery();
+
+            while(resultset.next()){
+                productBatch = new ProductBatchDTO(resultset.getInt(1),resultset.getDate(2),resultset.getInt(3),resultset.getInt(4));
+
+                // adds productBatches to productBatchList
+                productBatches.add(productBatch);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productBatches;
+    }
+
     @Override
     public void createProductBatch(ProductBatchDTO productBatch) throws DALException {
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
@@ -92,6 +115,22 @@ public class ProductBatchDAO implements IProductBatchDAO {
             pStmt.setDate(2, productBatch.getExpirationDate());
             pStmt.setInt(3, productBatch.getRecipeId());
             pStmt.setInt(4,productBatch.getProductBatchId());
+            pStmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateProductBatchExpirationDate(ProductBatchDTO productBatch) {
+
+        try (Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
+
+            PreparedStatement pStmt = connection.prepareStatement(
+                    "UPDATE product_batches SET expiration_date = ? WHERE product_batch_id = ?");
+
+            pStmt.setDate(1, productBatch.getExpirationDate());
+            pStmt.setInt(2,productBatch.getProductBatchId());
             pStmt.executeUpdate();
 
         } catch (SQLException e) {

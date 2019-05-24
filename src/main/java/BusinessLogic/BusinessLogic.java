@@ -3,10 +3,7 @@ package BusinessLogic;
 import data.dal.*;
 import data.dto.*;
 
-import javax.management.relation.Role;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,35 +15,8 @@ public class BusinessLogic {
     ProductBatchDAO productBatchDAO = new ProductBatchDAO();
     IngredientAmountsDAO ingredientAmountsDAO = new IngredientAmountsDAO();
     RessourceAmountsDAO ressourceAmountsDAO  = new RessourceAmountsDAO();
-
-
-    /** -system-
-     * For getting a users roles, used to figure out
-     * the users allowed actions in the system.
-     */
-    public List<RoleDTO> getRolesByUserId(int userId) throws DALException {
-        List<UserRoleDTO> rolesId = userRoleDAO.getRolesList(userId);
-        List<RoleDTO> roles = new ArrayList<>();
-        for (int i = 0; i < rolesId.size(); i++) {
-            roles.add(roleDAO.getRole(rolesId.get(i).getRoleId()));
-        }
-        return roles;
-    }
-
-
-    /** -system-
-     * Takes a list of roles, and checks if it corresponds
-     * with the specified role allowed to take a certain action.
-     */
-    public boolean isUserAllowedAccess(List<RoleDTO> roles, String allowedRoleName) {
-        boolean allowedAccess = false;
-        for (int i = 0; i < roles.size(); i++) {
-            if (roles.get(i).getRoleName().toLowerCase().equals(allowedRoleName.toLowerCase())) {
-                allowedAccess = true;
-            }
-        }
-        return allowedAccess;
-    }
+    IngredientDAO ingredientDAO = new IngredientDAO();
+    RessourceBatchDAO ressourceBatchDAO = new RessourceBatchDAO();
 
 
     /** -farmaceut-
@@ -85,6 +55,24 @@ public class BusinessLogic {
             newRecipe = recipeDAO.getRecipe(recipeId);
         }
         return newRecipe;
+    }
+
+
+    /** -farmaceut-
+     * Returns a list of the ressources that currently has 1 or more orders
+     */
+    public List<IngredientDTO> getOrderedRessources() {
+        return ingredientDAO.getOrderedRessources();
+    }
+
+
+    /** -farmaceut-
+     * Adds a ressourcebatch to the ressource_batches table,
+     * and decrements the reorder status for that ingredient
+     */
+    public void createRessourceBatch(RessourceBatchDTO ressourceBatch, int ingredientId, String producerName) throws DALException {
+        ressourceBatchDAO.createRessourceBatch(ressourceBatch,ingredientId,producerName);
+        updateIngredientReorder(ingredientId, true);
     }
 
 
@@ -134,7 +122,7 @@ public class BusinessLogic {
      * If operation is successful, the updated productBatch is returned.
      * In case of no success, null is returned.
      *
-     * If product batch is under production, the used ressources are saved in the database.
+     * If product batch is under production, the used ressource amounts are updated and saved in the database.
      */
     public ProductBatchDTO updateProductionStatus(int userId, int productBatchId, String newStatus) throws DALException {
         List<RoleDTO> roles = getRolesByUserId(userId);
@@ -149,7 +137,6 @@ public class BusinessLogic {
 
             productBatch = productBatchDAO.getProductBatch(productBatchId);
 
-
             if (newStatus.toLowerCase().equals("under produktion".toLowerCase())) {
                 int prodStk = productBatch.getProductBatchAmount();
                 List<IngredientAmountsDTO> ingredients = ingredientAmountsDAO.getIngredientAmounts(productBatch.getRecipeId());
@@ -157,10 +144,33 @@ public class BusinessLogic {
                 for (int i = 0; i < ingredients.size(); i++) {
                     int ingrAmount = ingredients.get(i).getIngredientAmount();
 
-                    double ressUsedAmount = (double) prodStk * ingrAmount * ingredients.get(i).getTolerance();
+                    //simulated variation
+                    double toleranceVariation =  Math.random()/100 * ingredients.get(i).getTolerance();
+                    int plusMinusSim = (int) (Math.random() * 2);
+                    if (plusMinusSim == 0) {
+                        toleranceVariation = 1 - toleranceVariation;
+                    } else {
+                        toleranceVariation = 1 + toleranceVariation;
+                    }
 
+                    double ressUsedAmount = (double) prodStk * ingrAmount * toleranceVariation;
+
+
+                    //updates the used amount in ressourceBatches
+                    RessourceBatchDTO ressourceBatch = getMinUsableRessourceBatch(ingredients.get(i).getIngredientId(),ressUsedAmount);
+                    updateRessourcebatchAmount(ressourceBatch,ressUsedAmount);
+                    //sets is_rest status if necessary
+                    ressourceBatchDAO.setIsRestStatusIfNeeded(ressourceBatch,1000 * getMinUsedIngredientAmountForRecipes(ingredients.get(i).getIngredientId()));
+
+                    //sets the status for reordering that ingredient if needed
+                    if (ressourceBatch.getRessourceBatchAmount() < 2 * 1000 * getMaxUsedIngredientAmountForRecipes(ingredients.get(i).getIngredientId())) {
+                        updateIngredientReorder(ingredients.get(i).getIngredientId(), false);
+                    }
+
+                    //updates the used amount in ressource_used_amounts for that product
                     RessourceAmountsDTO ressourceAmounts = new RessourceAmountsDTO(ressUsedAmount, ingredients.get(i).getIngredientId(),productBatchId);
                     ressourceAmountsDAO.createRessourceAmount(ressourceAmounts);
+
                 }
             }
         }
@@ -177,59 +187,111 @@ public class BusinessLogic {
      */
     public boolean createProductBatch(int userId, int recipeId, int amountInStk, Date expirationDate) throws DALException {
         List<RoleDTO> roles = getRolesByUserId(userId);
-//        ProductBatchDTO productBatch = null;
-
         boolean access = isUserAllowedAccess(roles, "produktionsleder");
         if(access) {
             ProductBatchDTO productBatchDTO = new ProductBatchDTO(expirationDate, amountInStk, recipeId);
             productBatchDAO.createProductBatch(productBatchDTO);
-//            productBatch = productBatchDAO.getProductBatch(pBId);     //nok lige meget
-
         }
         return access;
     }
 
 
+    /** -produktionsleder-
+     * A user tries to create a product batch.
+     * Only users with a(n) "produktionsleder" role is allowed to create the batch.
+     *
+     * If user is allowed the operation, true is returned.
+     * In case of no access, false is returned.
+     */
+    public boolean updateProductBatchExpirationDate(int userId, int productBatchId, Date newExpirationDate) throws DALException {
+        List<RoleDTO> roles = getRolesByUserId(userId);
 
-//    public void updateUsedRessourceAmount(int recipeId, int productBatchId) {
-//
-//            List<ingredientAmountDTO> ingredients = ingredientAmountDAO.getIngredientList(recipeId);
-//
-//            for (int i = 0; i < ingredients.size(); i++) {
-//                int ingrAmount = ingredients.get(i).getIngredientAmountIn_mg(recipeId);          //mængden uden den procentvise afvigelse
-//
-//                double ressUsedAmount = (double) amountInStk * ingrAmount * ingredients.get(i).getTolerance();        //kunne også droppe int for double i stedet for at caste
-//
-//
-////ressBatches har samme amount, men used amount kan trækkes fra for at se hvor meget er tilbage
-//                List<Integer> ressBatchIdList = ressourceBatchAmount.getIdListForBatchesBiggerThan(ressUsedAmount);
-//
-////                List<RessourceBatchDTO> ressBatches = ressourceBatchDAO.getRessBatchListForMinBiggerThan(ressUsedAmount);
-//
-//
-//
-//                for (int j = 0; j < ressBatchIdList.size(); j++) {
-//
-//                    RessourceBatchDTO ressourceBatch = ressourceBatchDAO.getRessourceBatch(ressBatchIdList.get(j));
-//                    double recievedBatchAmount = ressourceBatch.getRessourceAmount();       //er sat som int i DTO
-//
-//                    RessourceBatchAmountDTO ressourceBatchAmount = ressourcebatchAmountDAO.getRessourceBatchAmount(productBatchId, ressBatchIdList.get(j))
-//                    int totalUsedAmount = ressourceBatchAmount.getUsedAmount;
-//
-//
-//                    if (ressUsedAmount > recievedBatchAmount - totalUsedAmount) {
-//
-//                    }
-//                }
-//
-//
-//                ressourceBatchDAO.getRessIdListForIngredient(, ressUsedAmount); //returnerer id
-//
-//
-//                ressourceAmountDAO.updateUsedAmount(ressBatches, productBatchId, ressUsedAmount);
-//
-//        }
-//    }
+        boolean access = isUserAllowedAccess(roles, "produktionsleder");
+        if(access) {
+
+            ProductBatchDTO productBatchDTO = new ProductBatchDTO(newExpirationDate);
+            productBatchDAO.updateProductBatchExpirationDate(productBatchDTO);
+        }
+        return access;
+    }
+
+
+    /** -produktionsleder-
+     *
+     * Returns a list of the ressource batches
+     * which have enough ressources left to be used in recipes.
+     */
+    public List<RessourceBatchDTO> getRelevantRessourceBatches() {
+        return ressourceBatchDAO.getNotRestRessourceBatchList();
+    }
+
+
+    /** -all users-
+     * Returns a list with all productbatches, with the status of the parameter.
+     */
+    public List<ProductBatchDTO> getProductBatchWithStatus(String status) throws DALException {
+        return productBatchDAO.getProductBatchesWithStatus(status);
+    }
+
+
+    /** -system-
+     * Update made for incrementing/decrementing the reoder attribute of a
+     * certain ingredient by one, in case of a shortage of that ressources.
+     */
+    public void updateIngredientReorder(int ingredientId, boolean decrement) throws DALException {
+        ingredientDAO.updateIngredientReorder(ingredientId, decrement);
+    }
+
+    /** -system-
+     * Suitable for finding the relevant batch to substract amounts from.
+     */
+    public RessourceBatchDTO getMinUsableRessourceBatch(int ingredientId, double usedAmount) {
+        return ressourceBatchDAO.getMinUsableRessourceBatch(ingredientId, usedAmount);
+    }
+
+    /** -system-
+     * The ressourcebatchDTO in the parameter must be a legitimate object from the database,
+     * and it would be best if it is directly derived from the database beforehand.
+     */
+    public boolean updateRessourcebatchAmount(RessourceBatchDTO ressourceBatchDTO, double usedAmount) {
+        return ressourceBatchDAO.updateRessourceBatchAmount(ressourceBatchDTO, usedAmount);
+    }
+
+    public double getMinUsedIngredientAmountForRecipes(int ingredientId) {
+        return ingredientAmountsDAO.getMinUsedIngredientAmountForRecipes(ingredientId);
+    }
+
+    public double getMaxUsedIngredientAmountForRecipes(int ingredientId) {
+        return ingredientAmountsDAO.getMaxUsedIngredientAmountForRecipes(ingredientId);
+    }
+
+    /** -system-
+     * For getting a users roles, used to figure out
+     * the users allowed actions in the system.
+     */
+    public List<RoleDTO> getRolesByUserId(int userId) throws DALException {
+        List<UserRoleDTO> rolesId = userRoleDAO.getRolesList(userId);
+        List<RoleDTO> roles = new ArrayList<>();
+        for (int i = 0; i < rolesId.size(); i++) {
+            roles.add(roleDAO.getRole(rolesId.get(i).getRoleId()));
+        }
+        return roles;
+    }
+
+
+    /** -system-
+     * Takes a list of roles, and checks if it corresponds
+     * with the specified role allowed to take a certain action.
+     */
+    public boolean isUserAllowedAccess(List<RoleDTO> roles, String allowedRoleName) {
+        boolean allowedAccess = false;
+        for (int i = 0; i < roles.size(); i++) {
+            if (roles.get(i).getRoleName().toLowerCase().equals(allowedRoleName.toLowerCase())) {
+                allowedAccess = true;
+            }
+        }
+        return allowedAccess;
+    }
 
 
 }

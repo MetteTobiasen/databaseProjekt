@@ -4,7 +4,14 @@ public class IngredientDTO {
 
     private int ingredientId;
     private String ingredientName;
+    private int reoder;
 
+
+    public IngredientDTO(int ingredientId, String ingredientName, int reoder){
+        this.ingredientId = ingredientId;
+        this.ingredientName = ingredientName;
+        this.reoder = reoder;
+    }
 
     public IngredientDTO(int ingredientId, String ingredientName){
         this.ingredientId = ingredientId;
@@ -40,4 +47,11 @@ public class IngredientDTO {
         return  " ingredientName = " + ingredientName;
     }
 
+    public int getReoder() {
+        return reoder;
+    }
+
+    public void setReoder(int reoder) {
+        this.reoder = reoder;
+    }
 }

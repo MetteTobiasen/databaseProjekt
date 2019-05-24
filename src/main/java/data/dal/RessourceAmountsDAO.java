@@ -20,7 +20,7 @@ public class RessourceAmountsDAO {
             PreparedStatement pStmt = connection.prepareStatement(
                     "INSERT INTO ressource_amounts (ressource_batch_used_amount_in_mg, ressource_batch_id, product_batch_id) VALUES(?,?,?)");
 
-            pStmt.setInt(1, ressourceAmount.getRessourceBatchUsedAmount());
+            pStmt.setDouble(1, ressourceAmount.getRessourceBatchUsedAmount());
             pStmt.setInt(2, ressourceAmount.getRessourceBatchId());
             pStmt.setInt(3, ressourceAmount.getProductBatchId());
 
@@ -31,25 +31,6 @@ public class RessourceAmountsDAO {
         }
     }
 
-//    public void createRessourceAmount (RessourceAmountsDTO ressourceAmount, int ressourceBatchId, int productBatchId)throws DALException {
-//        try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
-//
-//            RessourceBatchDTO ressourceBatch = new RessourceBatchDTO(ressourceBatchId);
-//            ProductBatchDTO productBatch = new ProductBatchDTO(productBatchId);
-//
-//            PreparedStatement pStmt = connection.prepareStatement(
-//                    "INSERT INTO ressource_amounts (ressource_batch_used_amount_in_mg, ressource_batch_id, product_batch_id) VALUES(?,?,?)");
-//
-//            pStmt.setInt(1, ressourceAmount.getRessourceBatchUsedAmount());
-//            pStmt.setInt(2, ressourceBatch.getRessourceBatchId());
-//            pStmt.setInt(3, productBatch.getProductBatchId());
-//
-//            pStmt.executeUpdate();
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
 
 }

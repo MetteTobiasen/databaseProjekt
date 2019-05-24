@@ -44,7 +44,7 @@ public class IngredientDAO implements IIngredientDAO {
             ResultSet resultSet = pStmt.executeQuery();
             resultSet.next();
 
-            ingredient = new IngredientDTO(ingredientId,resultSet.getString(2));
+            ingredient = new IngredientDTO(ingredientId,resultSet.getString(2), resultSet.getInt(3));
 
         } catch (SQLException e){
             e.printStackTrace();
@@ -74,7 +74,7 @@ public class IngredientDAO implements IIngredientDAO {
     }
 
     @Override
-    public List<IngredientDTO> getUserList() throws DALException {
+    public List<IngredientDTO> getIngredientList() throws DALException {
         List<IngredientDTO> ingredients = new ArrayList<>();
         IngredientDTO ingredient = null;
 
@@ -84,7 +84,7 @@ public class IngredientDAO implements IIngredientDAO {
             ResultSet resultSet = pStmt.executeQuery();
 
             while(resultSet.next()){
-                ingredient = new IngredientDTO(resultSet.getInt(1),resultSet.getString(2));
+                ingredient = new IngredientDTO(resultSet.getInt(1),resultSet.getString(2),resultSet.getInt(3));
                 ingredients.add(ingredient);
             }
 
@@ -110,6 +110,27 @@ public class IngredientDAO implements IIngredientDAO {
         }
     }
 
+
+    public void updateIngredientReorder(int ingredientId, boolean decrement) throws DALException {
+        try (Connection connection = DriverManager.getConnection(url + userName + "&" + pass)) {
+
+            int reorderCount = getIngredient(ingredientId).getReoder();
+
+            PreparedStatement pStmt = connection.prepareStatement("UPDATE ingredients SET reorder = ? WHERE ingredient_id = ?");
+
+            if (decrement) {
+                pStmt.setInt(1,reorderCount - 1);
+            } else {
+                pStmt.setInt(1, reorderCount + 1);
+            }
+            pStmt.setInt(2, ingredientId);
+            pStmt.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void deleteIngredient(int ingredientId) throws DALException {
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
@@ -124,4 +145,22 @@ public class IngredientDAO implements IIngredientDAO {
     }
 
 
+    public List<IngredientDTO> getOrderedRessources() {
+        List<IngredientDTO> ingredients = new ArrayList<>();
+        IngredientDTO ingredient = null;
+
+        try(Connection connection = DriverManager.getConnection(url + userName + "&" + pass)){
+
+            PreparedStatement pStmt = connection.prepareStatement("SELECT * FROM ingredients WHERE reorder < 0");
+            ResultSet resultSet = pStmt.executeQuery();
+
+            while(resultSet.next()){
+                ingredient = new IngredientDTO(resultSet.getInt(1),resultSet.getString(2), resultSet.getInt(3));
+                ingredients.add(ingredient);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } return ingredients;
+    }
 }

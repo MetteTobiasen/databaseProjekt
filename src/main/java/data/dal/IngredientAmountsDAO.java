@@ -32,12 +32,11 @@ public class IngredientAmountsDAO {
     }
 
     public IngredientAmountsDTO getIngredientAmount(int ingredientId, int recipeId) throws DALException {
-
         IngredientAmountsDTO ingredientAmount = null;
 
         try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
 
-            PreparedStatement pStmt = connection.prepareStatement("SELECT * FROM ingredient_amounts WHERE ingredient_id = ? & recipe_id = ? ");
+            PreparedStatement pStmt = connection.prepareStatement("SELECT * FROM ingredient_amounts WHERE ingredient_id = ? AND recipe_id = ? ");
 
             pStmt.setInt(1, ingredientId);
             pStmt.setInt(2, recipeId);
@@ -134,7 +133,7 @@ public class IngredientAmountsDAO {
     public void deleteIngredientAmount(int ingredientId, int recipeId) throws DALException {
         try (Connection connection = DriverManager.getConnection(url + userName + "&" + pass)) {
 
-            PreparedStatement pStmt = connection.prepareStatement("DELETE FROM ingredient_amounts WHERE ingredient_id = ? & recipe = ?");
+            PreparedStatement pStmt = connection.prepareStatement("DELETE FROM ingredient_amounts WHERE ingredient_id = ? AND recipe = ?");
             pStmt.setInt(1, ingredientId);
             pStmt.setInt(2, recipeId);
             pStmt.executeUpdate();
@@ -144,6 +143,45 @@ public class IngredientAmountsDAO {
 
         }
 
+    }
+
+
+    public double getMinUsedIngredientAmountForRecipes(int ingredientId) {
+        double ingredientMinUsedAmount = Double.MAX_VALUE;              //better too high if not executed properly, to avoid wrong comparison
+
+        try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
+
+            PreparedStatement pStmt = connection.prepareStatement("SELECT ingredient_amount FROM ingredient_amounts WHERE ingredient_id = ? ORDER BY ingredient_amount LIMIT 1;");
+
+            pStmt.setInt(1, ingredientId);
+            ResultSet resultset = pStmt.executeQuery();
+            resultset.next();
+
+            ingredientMinUsedAmount = resultset.getDouble(1);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ingredientMinUsedAmount;
+    }
+
+    public double getMaxUsedIngredientAmountForRecipes(int ingredientId) {
+        double ingredientMaxUsedAmount = Double.MIN_VALUE;              //better too low if not executed properly, to avoid wrong comparison
+
+        try(Connection connection = DriverManager.getConnection(url + userName +"&"+ pass)){
+
+            PreparedStatement pStmt = connection.prepareStatement("SELECT ingredient_amount FROM ingredient_amounts WHERE ingredient_id = ? ORDER BY ingredient_amount DESC LIMIT 1;");
+
+            pStmt.setInt(1, ingredientId);
+            ResultSet resultset = pStmt.executeQuery();
+            resultset.next();
+
+            ingredientMaxUsedAmount = resultset.getDouble(1);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ingredientMaxUsedAmount;
     }
 
 }
